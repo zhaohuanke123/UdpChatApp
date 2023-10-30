@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using LinGuGu2.UserControls;
 
 namespace LinGuGu2
 {
@@ -12,19 +13,19 @@ namespace LinGuGu2
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(e.ChangedButton == MouseButton.Left)
+            if (e.ChangedButton == MouseButton.Left)
             {
                 this.DragMove();
             }
-
         }
 
         bool IsMaximized = false;
+
         private void Boreder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if(e.ClickCount ==2)
+            if (e.ClickCount == 2)
             {
-                if(IsMaximized)
+                if (IsMaximized)
                 {
                     this.WindowState = WindowState.Normal;
                     this.Width = 1250;
@@ -38,6 +39,17 @@ namespace LinGuGu2
                     IsMaximized = true;
                 }
             }
+        }
+
+        private void SendButtonClick(object sender, RoutedEventArgs e)
+        {
+            MyMessageChat messagechat = new MyMessageChat();
+            messagechat.Message = TxtMessage.Text;
+            TxtMessage.Text = "";
+            
+            ChatStackPanel.Children.Add(messagechat);
+            // 滑到最下面
+            ChatScroll.ScrollToBottom();
         }
     }
 }

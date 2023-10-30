@@ -12,11 +12,14 @@ namespace LinGuGu2.UserControls
 
         public string Message
         {
-            get { return (string)GetValue(MessageProperty); }
-            set { SetValue(MessageProperty, value); }
+            get => (string)GetValue(MessageProperty);
+            set => SetValue(MessageProperty, value);
         }
 
-        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(MyMessageChat));
-
+        public static readonly DependencyProperty MessageProperty =
+            DependencyProperty.Register(
+                "Message",
+                typeof(string),
+                typeof(MyMessageChat));
     }
 }
