@@ -62,7 +62,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Service\UdpTest.cs" />
+    <Compile Include="Service\MessageType.cs" />
+    <Compile Include="Service\UdpReceiveThread.cs" />
+    <Compile Include="Service\UdpUtil.cs" />
     <Compile Include="UserControls\AccountMenuButton.xaml.cs">
       <DependentUpon>AccountMenuButton.xaml</DependentUpon>
     </Compile>

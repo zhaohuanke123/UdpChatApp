@@ -16,7 +16,11 @@ namespace LinGuGu2.UserControls
             set => SetValue(MessageProperty, value);
         }
 
-        public static readonly DependencyProperty MessageProperty = DependencyProperty.Register("Message", typeof(string), typeof(MessageChat));
+        public static readonly DependencyProperty MessageProperty = 
+            DependencyProperty.Register(
+                "Message",
+                typeof(string),
+                typeof(MessageChat));
 
         public Brush Color
         {

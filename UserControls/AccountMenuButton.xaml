@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Name="accountMenu">
     
-    <Button Style="{StaticResource leftSideButton}">
+    <Button Style="{StaticResource LeftSideButton}">
         <Grid>
             <Border HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="2.5" Background="#ffffff"
                     Margin="0 -10" CornerRadius="0 3 3 0" 

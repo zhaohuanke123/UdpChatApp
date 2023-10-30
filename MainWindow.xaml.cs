@@ -1,5 +1,9 @@
-﻿using System.Windows;
+﻿using System;
+using System.Threading;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
+using LinGuGu2.Service;
 using LinGuGu2.UserControls;
 
 namespace LinGuGu2
@@ -9,6 +13,19 @@ namespace LinGuGu2
         public MainWindow()
         {
             InitializeComponent();
+
+            UdpReceiveThread udpReceiveThread = new UdpReceiveThread("127.0.0.1", 6000);
+            udpReceiveThread.ReceiveAction += (s =>
+            {
+                App.Current.Dispatcher.Invoke(
+                    new Action(() =>
+                    {
+                        PushAnMessage(s, false);
+                    })
+                    
+                );
+            });
+            udpReceiveThread.StartReceive();
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -19,35 +36,58 @@ namespace LinGuGu2
             }
         }
 
-        bool IsMaximized = false;
+        bool _isMaximized = false;
 
-        private void Boreder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount == 2)
             {
-                if (IsMaximized)
+                if (_isMaximized)
                 {
                     this.WindowState = WindowState.Normal;
                     this.Width = 1250;
                     this.Height = 830;
 
-                    IsMaximized = false;
+                    _isMaximized = false;
                 }
                 else
                 {
                     this.WindowState = WindowState.Maximized;
-                    IsMaximized = true;
+                    _isMaximized = true;
                 }
             }
         }
 
         private void SendButtonClick(object sender, RoutedEventArgs e)
         {
-            MyMessageChat messagechat = new MyMessageChat();
-            messagechat.Message = TxtMessage.Text;
+            if (TxtMessage.Text == "")
+            {
+                return;
+            }
+
+            PushAnMessage(TxtMessage.Text);
+            UdpUtil.SendMsg(TxtMessage.Text);
             TxtMessage.Text = "";
-            
-            ChatStackPanel.Children.Add(messagechat);
+        }
+
+        private void PushAnMessage(String message, bool isMyMessage = true)
+        {
+            if (isMyMessage)
+            {
+                MyMessageChat messageChat = new MyMessageChat();
+                messageChat.Message = message;
+
+                ChatStackPanel.Children.Add(messageChat);
+                Console.WriteLine("Add a message form me");
+            }
+            else
+            {
+                MessageChat messageChat = new MessageChat{Message = message,Color = Brushes.Red};
+
+                ChatStackPanel.Children.Add(messageChat);
+                Console.WriteLine("Add a message form other");
+            }
+
             // 滑到最下面
             ChatScroll.ScrollToBottom();
         }
