@@ -8,7 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/p11.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/p12.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("tmp/mainwindow.txt")]
 
 

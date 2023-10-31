@@ -51,7 +51,6 @@ C:\Users\zhk02\RiderProjects\Chat-Messaging-App\bin\Debug\MahApps.Metro.IconPack
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\bin\Debug\MahApps.Metro.IconPacks.Material.xml
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\LinGuGu2.csproj.AssemblyReference.cache
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\AccountMenuButton.baml
-C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\Chat_Seprator.baml
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\Item.baml
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\MenuButton.baml
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\Messagechat.baml
@@ -61,7 +60,6 @@ C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\UserImage
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\App.baml
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\MainWindow.g.cs
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\AccountMenuButton.g.cs
-C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\Chat_Seprator.g.cs
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\Item.g.cs
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\MenuButton.g.cs
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\Messagechat.g.cs
@@ -81,3 +79,5 @@ C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\LinGuGu2.csproj.CopyCo
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\bin\Debug\Newtonsoft.Json.dll
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\bin\Debug\Newtonsoft.Json.pdb
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\bin\Debug\Newtonsoft.Json.xml
+C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\Chat_Separator.baml
+C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\Chat_Separator.g.cs

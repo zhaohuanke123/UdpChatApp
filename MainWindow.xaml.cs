@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using LinGuGu2.Behaviors;
 using LinGuGu2.Service;
 using LinGuGu2.UserControls;
 
@@ -10,9 +12,17 @@ namespace LinGuGu2
 {
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
+            
+            Loaded += (s, e) =>
+            {
+                var layer = AdornerLayer.GetAdornerLayer(BackgroundBorder);
+                layer.Add(new GridAdorner(BackgroundBorder));
+            };
+            
 
             UdpReceiveThread udpReceiveThread = new UdpReceiveThread("127.0.0.1", 6000);
             udpReceiveThread.ReceiveAction += (s =>

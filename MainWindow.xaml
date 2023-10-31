@@ -4,6 +4,7 @@
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:uc="clr-namespace:LinGuGu2.UserControls"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:helpers="clr-namespace:LinGuGu2.Helpers"
         Height="830" Width="1250" ResizeMode="NoResize" Background="Transparent"
         AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen">
 
@@ -25,7 +26,8 @@
         </Grid.RowDefinitions>
 
         <!--background-->
-        <Border CornerRadius="0 12 12 0" Background="#f8f7fc"
+        <Border x:Name="BackgroundBorder"
+                CornerRadius="0 12 12 0" Background="#f8f7fc"
                 Grid.Column="2" Grid.ColumnSpan="2" Margin="-25 0 0 0"
                 Grid.RowSpan="2" MouseDown="Border_MouseDown" MouseLeftButtonDown="Border_MouseLeftButtonDown">
             <!-- 窗口三个按钮关闭，最大化，最小化 -->
@@ -47,7 +49,6 @@
                 </Button>
             </StackPanel>
         </Border>
-
         <!--left menu 1-->
         <Border CornerRadius="12" Grid.RowSpan="2" Panel.ZIndex="2" Background="#6145e3">
             <Grid>
@@ -80,119 +81,7 @@
 
             </Grid>
         </Border>
-
-        <!--left menu 2-->
-        <!-- <Border Grid.Column="1" Grid.RowSpan="2" CornerRadius="0 20 20 0" Background="#6f50ff" Panel.ZIndex="1" -->
-        <!--         Margin="-25 0 0 0"> -->
-        <!--     <Grid> -->
-        <!--         ~1~top combobox@1@ -->
-        <!--         <ComboBox Style="{DynamicResource ComboBoxStyle1}" VerticalAlignment="Top" Margin="25 45 0 0"> -->
-        <!--             <ComboBoxItem Content="Cabang Yog" /> -->
-        <!--             <ComboBoxItem Content="Reza Asadi" IsSelected="True" /> -->
-        <!--             <ComboBoxItem Content="John Doe" /> -->
-        <!--             <ComboBoxItem Content="Rojan Mary" /> -->
-        <!--         </ComboBox> -->
-        <!-- -->
-        <!--         ~1~menu buttons@1@ -->
-        <!--         <StackPanel Margin="25 160 0 0"> -->
-        <!--             <uc:MenuButton Title="Dashboard" Icon="HomeOutline" /> -->
-        <!--             <uc:MenuButton Title="Shipment" Icon="ChartTimelineVariantShimmer" /> -->
-        <!--             <uc:MenuButton Title="Users" Icon="AccountMultipleOutline" /> -->
-        <!--             <uc:MenuButton Title="Messages" Icon="MessageOutline" IsActive="True" /> -->
-        <!--             <uc:MenuButton Title="Revenue" Icon="CurrencyUsd" /> -->
-        <!--             <uc:MenuButton Title="Maps" Icon="MapMarkerOutline" /> -->
-        <!--         </StackPanel> -->
-        <!-- -->
-        <!--         ~1~menu buttons bottom@1@ -->
-        <!--         <StackPanel Margin="25 0 0 40" VerticalAlignment="Bottom"> -->
-        <!--             <uc:MenuButton Title="Settings" Icon="CogOutline" /> -->
-        <!--             <uc:MenuButton Title="Logout" Icon="Logout" /> -->
-        <!--         </StackPanel> -->
-        <!--     </Grid> -->
-        <!-- </Border> -->
-
-        <!-- top section -->
-        <!-- <Grid Grid.Column="2" Grid.ColumnSpan="2" Margin="40 30"> -->
-        <!--search textbox-->
-        <!-- <Grid Width="500" HorizontalAlignment="Left"> -->
-        <!--     <ComboBox Style="{StaticResource ComboBoxStyle2}" HorizontalAlignment="Left" Margin="3 0 0 0" -->
-        <!--               Panel.ZIndex="2"> -->
-        <!--         <ComboBoxItem Content="All Category" IsSelected="True" /> -->
-        <!--         <ComboBoxItem Content="Books" /> -->
-        <!--         <ComboBoxItem Content="Cars" /> -->
-        <!--         <ComboBoxItem Content="Plants" /> -->
-        <!--     </ComboBox> -->
-        <!-- -->
-        <!--     <Rectangle Width="1" Fill="#e9e9e9" Panel.ZIndex="2" HorizontalAlignment="Left" Margin="130 19 0 19" /> -->
-        <!-- -->
-        <!--     <TextBlock Margin="150 0 20 0" VerticalAlignment="Center" Foreground="#868686" Panel.ZIndex="1" -->
-        <!--                IsHitTestVisible="False" Text="Search here ..." -->
-        <!--                Visibility="{Binding ElementName=txtboxSearch,Path=Text.IsEmpty,Converter={StaticResource BoolTovis}}" /> -->
-        <!-- -->
-        <!--     <TextBox x:Name="txtboxSearch" Style="{StaticResource searchTextbox}" /> -->
-        <!-- -->
-        <!--     <Button HorizontalAlignment="Right" Margin="0 0 7 0" Style="{StaticResource textBoxButton}"> -->
-        <!--         <Icon:PackIconMaterial Kind="Magnify" Width="15" Foreground="#c7c7c7" /> -->
-        <!--     </Button> -->
-        <!-- </Grid> -->
-
-        <!--top menu-->
-        <!-- <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"> -->
-        <!--     <Button Style="{StaticResource textBoxButton}"> -->
-        <!--         <Icon:PackIconMaterial Kind="BellOutline" Foreground="#88878e" /> -->
-        <!--     </Button> -->
-        <!-- -->
-        <!--     <Button Style="{StaticResource textBoxButton}" Background="#e9e9e9"> -->
-        <!--         <Icon:PackIconMaterial Kind="AccountArrowLeftOutline" Foreground="#88878e" /> -->
-        <!--     </Button> -->
-        <!-- -->
-        <!--     <Button Style="{StaticResource textBoxButton}"> -->
-        <!--         <Icon:PackIconMaterial Kind="DotsVertical" Foreground="#88878e" /> -->
-        <!--     </Button> -->
-        <!-- </StackPanel> -->
-        <!-- </Grid> -->
-
-        <!--chat items section-->
-        <!-- <Border Grid.Column="2" Grid.Row="1"> -->
-        <!--     <Grid> -->
-        <!--         ~1~seprator@1@ -->
-        <!--         <StackPanel Orientation="Horizontal" Margin="30 0 0 30"> -->
-        <!--             <Rectangle Width="0.8" Stroke="#dadada" VerticalAlignment="Stretch" /> -->
-        <!--         </StackPanel> -->
-        <!-- -->
-        <!--         ~1~group items@1@ -->
-        <!--         <StackPanel Margin="30 0 15 0"> -->
-        <!--             <TextBlock Text="Groups" Margin="25 0 0 5" Style="{StaticResource titleText}" /> -->
-        <!--             <uc:Item Title="Para Habib" Message="Okey,Cool!" Color="#73afff" TagName="PH" MessageCount="2" -->
-        <!--                      Image="/Images/p5.jpg" /> -->
-        <!--             <uc:Item Title="Moonlab Std" Message="I'm Waiting for Maud for com..." Color="#8387ec" TagName="MS" -->
-        <!--                      Image="/Images/p6.jpg" /> -->
-        <!--             <uc:Item Title="Omah Guyup" Message="Thanks! im going forward" Color="#ffad2c" TagName="OG" -->
-        <!--                      MessageCount="6" Image="/Images/p7.jpg" /> -->
-        <!--             <uc:Item Title="Sugih Manteb" Message="Thank you" Color="#ff7195" TagName="SM" MessageCount="1" -->
-        <!--                      Image="/Images/p8.jpg" /> -->
-        <!--             <uc:Item Title="Bakul Mac" Message="Grateful thoughts" Color="#5ac795" TagName="BM" -->
-        <!--                      MessageCount="1" Image="/Images/p9.jpg" /> -->
-        <!-- -->
-        <!--             <Button Content="Show All" Style="{StaticResource showBoxButton}" /> -->
-        <!-- -->
-        <!--             <TextBlock Text="Persons" Margin="25 15 0 5" Style="{StaticResource titleText}" /> -->
-        <!-- -->
-        <!--             ~1~person Items@1@ -->
-        <!--             <uc:Item Title="Cole Strickland" Message="Okey, Nice work" Color="#73afff" MessageCount="2" -->
-        <!--                      Image="/Images/p1.jpg" /> -->
-        <!--             <uc:Item Title="Reza Asadi" Message="Plz share those recap to me" Image="/Images/p2.jpg" /> -->
-        <!--             <uc:Item Title="Gavin Harrison" Message="You can check it now" Image="/Images/p3.jpg" /> -->
-        <!--             <uc:Item Title="Lillian Davis" Message="OMG !!!" Color="#5ac795" MessageCount="3" -->
-        <!--                      Image="/Images/p4.jpg" /> -->
-        <!-- -->
-        <!--             <Button Content="Show All" Style="{StaticResource showBoxButton}" /> -->
-        <!-- -->
-        <!--         </StackPanel> -->
-        <!--     </Grid> -->
-        <!-- </Border> -->
-
-
+        
         <!--chat section-->
         <Border CornerRadius="15" Background="#ffffff" Grid.Column="3" Grid.Row="1" Margin="0 0 30 30"
                 ClipToBounds="True">
@@ -210,20 +99,6 @@
                     </Grid.Effect>
 
                     <TextBlock Text="Moonlab Std" FontSize="16" Margin="20 15" HorizontalAlignment="Left" />
-
-                    <!-- <StackPanel Orientation="Horizontal" Margin="0 0 10 0" HorizontalAlignment="Right"> -->
-                    <!-- -->
-                    <!--     <uc:UserImage Image="/Images/p10.jpg" Margin="0 0 -15 0" /> -->
-                    <!--     <uc:UserImage Image="/Images/p11.jpg" Margin="0 0 -15 0" /> -->
-                    <!--     <uc:UserImage Image="/Images/p12.jpg" /> -->
-                    <!-- -->
-                    <!--     <TextBlock Text="and 3 others" VerticalAlignment="Center" Margin="7 0" Foreground="#8b8a8f" -->
-                    <!--                FontSize="11" /> -->
-                    <!-- -->
-                    <!--     <Button Style="{StaticResource textBoxButton}"> -->
-                    <!--         <Icon:PackIconMaterial Kind="DotsVertical" Width="14" Height="14" Foreground="#88878e" /> -->
-                    <!--     </Button> -->
-                    <!-- </StackPanel> -->
                 </Grid>
 
                 <!--聊天界面-->
