@@ -41,6 +41,9 @@
     <Reference Include="MahApps.Metro.IconPacks.Material, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0c0d510f9915137a, processorArchitecture=MSIL">
       <HintPath>packages\MahApps.Metro.IconPacks.Material.4.11.0\lib\net45\MahApps.Metro.IconPacks.Material.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\Desktop\Json130r3\Bin\netstandard2.0\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -68,8 +71,8 @@
     <Compile Include="UserControls\AccountMenuButton.xaml.cs">
       <DependentUpon>AccountMenuButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Chat_Seprator.xaml.cs">
-      <DependentUpon>Chat_Seprator.xaml</DependentUpon>
+    <Compile Include="UserControls\Chat_Separator.xaml.cs">
+      <DependentUpon>Chat_Separator.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Item.xaml.cs">
       <DependentUpon>Item.xaml</DependentUpon>
@@ -105,7 +108,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControls\Chat_Seprator.xaml">
+    <Page Include="UserControls\Chat_Separator.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

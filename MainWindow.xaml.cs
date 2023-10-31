@@ -91,5 +91,35 @@ namespace LinGuGu2
             // 滑到最下面
             ChatScroll.ScrollToBottom();
         }
+
+        private void MinimizeButtonClick(object sender, RoutedEventArgs e)
+        {
+            // 最下化窗口
+            this.WindowState = WindowState.Minimized;
+        }
+
+        private void MaximizeButtonClick(object sender, RoutedEventArgs e)
+        {
+            // 最大化窗口
+            if (_isMaximized)
+            {
+                this.WindowState = WindowState.Normal;
+                this.Width = 1250;
+                this.Height = 830;
+
+                _isMaximized = false;
+            }
+            else
+            {
+                this.WindowState = WindowState.Maximized;
+                _isMaximized = true;
+            }
+        }
+
+        private void CloseButtonClick(object sender, RoutedEventArgs e)
+        {
+            // 关闭窗口
+            Close();
+        }
     }
 }

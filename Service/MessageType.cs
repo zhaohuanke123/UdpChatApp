@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 
 namespace LinGuGu2.Service
 {
@@ -12,8 +13,8 @@ namespace LinGuGu2.Service
     {
         public MessageType()
         {
-            
         }
+
         public MessageType(string type, string message, string sender, string receiver, string time)
         {
             Type = type;
@@ -21,6 +22,31 @@ namespace LinGuGu2.Service
             Sender = sender;
             Receiver = receiver;
             Time = time;
+        }
+
+        public MessageType(string json)
+        {
+            MessageType type = null;
+            try
+            {
+                type = JsonConvert.DeserializeObject<MessageType>(json);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                Console.Error.WriteLine("Json解析错误");
+            }
+
+            Type = type.Type;
+            Message = type.Message;
+            Sender = type.Sender;
+            Receiver = type.Receiver;
+            Time = type.Time;
+        }
+
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this);
         }
 
         /// <summary>
@@ -50,11 +76,7 @@ namespace LinGuGu2.Service
 
         public override string ToString()
         {
-            return "Type: " + Type + "\n" +
-                   "Message: " + Message + "\n" +
-                   "Sender: " + Sender + "\n" +
-                   "Receiver: " + Receiver + "\n" +
-                   "Time: " + Time + "\n";
+            return JsonConvert.SerializeObject(this);
         }
     }
 }

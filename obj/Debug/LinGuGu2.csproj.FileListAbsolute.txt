@@ -78,3 +78,6 @@ C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\LinGuGu2.Properties.Re
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\LinGuGu2.csproj.GenerateResource.cache
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\LinGuGu2.csproj.CoreCompileInputs.cache
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\LinGuGu2.csproj.CopyComplete
+C:\Users\zhk02\RiderProjects\Chat-Messaging-App\bin\Debug\Newtonsoft.Json.dll
+C:\Users\zhk02\RiderProjects\Chat-Messaging-App\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\zhk02\RiderProjects\Chat-Messaging-App\bin\Debug\Newtonsoft.Json.xml

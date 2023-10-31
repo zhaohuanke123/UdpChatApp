@@ -5,18 +5,83 @@
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
-        <!--滚动条宽度-->
-        <system:Double x:Key="ScrollBarThickness">4</system:Double>
-        <!--滑块颜色-->
-        <SolidColorBrush x:Key="ThumbBackground" Color="#cccccc" />
         
-        <Style x:Key="ScrollViewerSlider" TargetType="ScrollViewer">
+        <Style x:Key="WindowButtonStyle" TargetType="Button">
+            
+        </Style>
+        <Style x:Key="WindowStylePartTitle" TargetType="Window">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate>
-                        <Border Width="{DynamicResource ScrollBarThickness}" 
-                                Background="{DynamicResource ThumbBackground}" />
+                    <ControlTemplate TargetType="Window">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <ContentPresenter Grid.Column="0" Margin="5 0 0 0"/>
+                                        <StackPanel Grid.Column="1" Orientation="Horizontal"
+                                                    HorizontalAlignment="Right" VerticalAlignment="Center">
+                                            <Button x:Name="PART_Close" 
+                                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=CloseCommand}"
+                                                    ToolTip="Close" Margin="0 0 5 0">
+                                                <icon:PackIconMaterial Kind="Close" />
+                                            </Button>
+                                            <Button x:Name="PART_Max" 
+                                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MaximizeCommand}"
+                                                    ToolTip="Maximize" Margin="0 0 5 0">
+                                                <icon:PackIconMaterial Kind="WindowMaximize" />
+                                            </Button>
+                                            <Button x:Name="PART_Restore" 
+                                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=RestoreCommand}"
+                                                    ToolTip="Restore" Margin="0 0 5 0">
+                                                <icon:PackIconMaterial Kind="WindowRestore" />
+                                            </Button>
+                                            <Button x:Name="PART_Min" 
+                                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=MinimizeCommand}"
+                                                    ToolTip="Minimize" Margin="0 0 5 0">
+                                                <icon:PackIconMaterial Kind="WindowMinimize" />
+                                            </Button>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                <AdornerDecorator Grid.Row="1">
+                                    <ContentPresenter />
+                                </AdornerDecorator>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ScrollViewerStyle" TargetType="ScrollViewer">
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollViewer">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ScrollContentPresenter Grid.Column="0" Grid.Row="0" Margin="{TemplateBinding Padding}"
+                                                    Content="{TemplateBinding Content}"
+                                                    ContentTemplate="{TemplateBinding ContentTemplate}" />
+                        </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

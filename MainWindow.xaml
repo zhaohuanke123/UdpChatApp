@@ -25,11 +25,31 @@
         </Grid.RowDefinitions>
 
         <!--background-->
-        <Border CornerRadius="0 20 20 0" Background="#f8f7fc" Grid.Column="2" Grid.ColumnSpan="2" Margin="-25 0 0 0"
-                Grid.RowSpan="2" MouseDown="Border_MouseDown" MouseLeftButtonDown="Border_MouseLeftButtonDown" />
+        <Border CornerRadius="0 12 12 0" Background="#f8f7fc"
+                Grid.Column="2" Grid.ColumnSpan="2" Margin="-25 0 0 0"
+                Grid.RowSpan="2" MouseDown="Border_MouseDown" MouseLeftButtonDown="Border_MouseLeftButtonDown">
+            <!-- 窗口三个按钮关闭，最大化，最小化 -->
+            <StackPanel Orientation="Horizontal" Margin="0 0 8 0" HorizontalAlignment="Right"
+                        VerticalAlignment="Top">
+                <Button Style="{StaticResource TextBoxButton}" Margin="0 0 1 0"
+                        Click="MinimizeButtonClick">
+                    <icon:PackIconMaterial Kind="WindowMinimize" Width="12" Foreground="#a6a6a6" />
+                </Button>
+
+                <Button Style="{StaticResource TextBoxButton}"
+                        Click="MaximizeButtonClick">
+                    <icon:PackIconMaterial Kind="WindowMaximize" Width="12" Foreground="#a6a6a6" />
+                </Button>
+
+                <Button Style="{StaticResource TextBoxButton}"
+                        Click="CloseButtonClick">
+                    <icon:PackIconMaterial Kind="Close" Width="12" Foreground="#a6a6a6" />
+                </Button>
+            </StackPanel>
+        </Border>
 
         <!--left menu 1-->
-        <Border CornerRadius="20" Grid.RowSpan="2" Panel.ZIndex="2" Background="#6145e3">
+        <Border CornerRadius="12" Grid.RowSpan="2" Panel.ZIndex="2" Background="#6145e3">
             <Grid>
                 <!--App tittle-->
                 <TextBlock Text="Chat App" Foreground="#FFFFFF" FontSize="16" VerticalAlignment="Top"
@@ -207,10 +227,11 @@
                 </Grid>
 
                 <!--聊天界面-->
-                <ScrollViewer x:Name="ChatScroll" Grid.Row="1" VerticalScrollBarVisibility="Auto"
+                <ScrollViewer Style="{StaticResource ScrollViewerStyle}"
+                              x:Name="ChatScroll" Grid.Row="1" VerticalScrollBarVisibility="Auto"
                               HorizontalScrollBarVisibility="Disabled">
-                    <StackPanel x:Name="ChatStackPanel" Grid.Row="1" Margin="20 10 20 20">
-                        <uc:Chat_Seprator Title="Yesterday" />
+                    <StackPanel x:Name="ChatStackPanel" Margin="20 10 20 20">
+                        <uc:ChatSeparator Title="Yesterday" />
 
                         <uc:UserChat Username="Maud Carson" Image="/Images/p11.jpg" />
 
@@ -230,7 +251,7 @@
 
                         <TextBlock Text="6:39 PM" Style="{StaticResource TimeText}" />
 
-                        <uc:Chat_Seprator Title="Today" Margin="0 5 0 0" />
+                        <uc:ChatSeparator Title="Today" Margin="0 5 0 0" />
 
                         <uc:UserChat Username="Cole Strickland" Image="/Images/p12.jpg" />
 
@@ -240,6 +261,9 @@
 
                         <TextBlock Text="3:25 PM" Style="{StaticResource TimeText}" />
 
+                        <uc:MyMessageChat Message="I'm waiting for Maud for comeback to the chat" />
+                        <uc:MyMessageChat Message="I'm waiting for Maud for comeback to the chat" />
+                        <uc:MyMessageChat Message="I'm waiting for Maud for comeback to the chat" />
                         <uc:MyMessageChat Message="I'm waiting for Maud for comeback to the chat" />
 
                         <TextBlock Text="3:26 PM" Style="{StaticResource TimeTextRight}" />
