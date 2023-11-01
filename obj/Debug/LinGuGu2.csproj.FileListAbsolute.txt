@@ -81,3 +81,8 @@ C:\Users\zhk02\RiderProjects\Chat-Messaging-App\bin\Debug\Newtonsoft.Json.pdb
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\bin\Debug\Newtonsoft.Json.xml
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\Chat_Separator.baml
 C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\UserControls\Chat_Separator.g.cs
+C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\LinGuGu2_Content.g.cs
+C:\Users\zhk02\RiderProjects\Chat-Messaging-App\bin\Debug\LinGuGu2.exe.manifest
+C:\Users\zhk02\RiderProjects\Chat-Messaging-App\bin\Debug\LinGuGu2.application
+C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\LinGuGu2.exe.manifest
+C:\Users\zhk02\RiderProjects\Chat-Messaging-App\obj\Debug\LinGuGu2.application

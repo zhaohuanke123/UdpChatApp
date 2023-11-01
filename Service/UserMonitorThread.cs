@@ -1,0 +1,148 @@
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading;
+using LinGuGu2.Util;
+
+namespace LinGuGu2.Service
+{
+    /// <summary>
+    /// 循环检测局域网的设备，定时发送连接请求
+    /// </summary>
+    public class UserMonitorThread
+    {
+        List<User> _userList = new List<User>();
+        public List<User> UserList => _userList;
+        public static Action<User> UserListChangeEvent;
+
+        public UserMonitorThread()
+        {
+            UdpReceiveThread.ReceiveReplyEvent += ReceiveReplyAction;
+            UdpReceiveThread.ReceiveRequestEvent += ReceiveRequestAction;
+            UdpReceiveThread.ReceiveMessageEvent += ReceiveMessageAction;
+        }
+
+        public void RunMonitor()
+        {
+            // 获取子网掩码
+            var subnetMask = LocalAccount.GetInstance.SubnetMask;
+            // 获取本机的ip
+            var localIp = LocalAccount.GetInstance.LocalIp;
+            // 获取子网掩码的字节数组
+            var subnetMaskBytes = subnetMask.GetAddressBytes();
+            // 获取本机的ip的字节数组
+            var localIpBytes = localIp.GetAddressBytes();
+
+            //获取网络号
+            var netId = new byte[4];
+            for (var i = 0; i < subnetMaskBytes.Length; i++)
+            {
+                netId[i] = (byte)(localIpBytes[i] & subnetMaskBytes[i]);
+            }
+
+            // 获取子网掩码的反码
+            var subnetMaskReverseBytes = new byte[4];
+            for (var i = 0; i < subnetMaskBytes.Length; i++)
+            {
+                subnetMaskReverseBytes[i] = (byte)~subnetMaskBytes[i];
+            }
+
+            // 求得最大主机号
+            var maxHostId = new byte[4];
+            for (var i = 0; i < subnetMaskBytes.Length; i++)
+            {
+                maxHostId[i] = (byte)(netId[i] | subnetMaskReverseBytes[i]);
+            }
+
+            // 循环对子网中的所有ip进行连接请求
+            while (true)
+            {
+                // 遍历所有可能的主机号,四层for循环
+                for (var netId0 = netId[0]; netId0 <= maxHostId[0]; netId0++)
+                {
+                    for (var netId1 = netId[1]; netId1 <= maxHostId[1]; netId1++)
+                    {
+                        for (var netId2 = netId[2]; netId2 <= maxHostId[2]; netId2++)
+                        {
+                            for (var netId3 = netId[3]; netId3 < maxHostId[3]; netId3++)
+                            {
+                                var ip = netId0 + "." + netId1 + "." + netId2 + "." + netId3;
+
+                                // 发送连接请求
+                                MessageType messageType = new MessageType
+                                {
+                                    Type = MessageTypeEnum.RequestConnect,
+                                    Message = "",
+                                    Sender = LocalAccount.GetInstance.LocalIp.ToString(),
+                                    Receiver = ip,
+                                    Time = new DateTime().ToString()
+                                };
+                                Console.WriteLine(ip);
+                                UdpUtil.SendMsg(messageType.ToJson(), IPAddress.Parse(ip),
+                                    UdpReceiveThread.ReceivePort);
+                                // Console.WriteLine("发送连接请求"+messageType.ToJson());
+                            }
+                        }
+                    }
+                }
+
+                Thread.Sleep(5000);
+            }
+        }
+
+        private void ReceiveMessageAction(MessageType messageType)
+        {
+            for (var i = 0; i < _userList.Count; i++)
+            {
+                if (_userList[i].Ip.ToString() == messageType.Sender)
+                {
+                    _userList[i].AddMessage(messageType);
+                    return;
+                }
+            }
+        }
+
+        private void ReceiveRequestAction(MessageType messageType)
+        {
+            if (messageType.Type == MessageTypeEnum.RequestConnect)
+            {
+                // 如果是请求连接的消息，则回复连接
+                MessageType replyMessageType = new MessageType
+                {
+                    Type = MessageTypeEnum.ReplyConnect,
+                    Message = "",
+                    Sender = LocalAccount.GetInstance.LocalIp.ToString(),
+                    Receiver = messageType.Sender,
+                };
+                UdpUtil.SendMsg(replyMessageType.ToJson(), IPAddress.Parse(messageType.Sender),
+                    UdpReceiveThread.ReceivePort);
+            }
+        }
+
+        private void ReceiveReplyAction(MessageType messageType)
+        {
+            if (messageType.Type == MessageTypeEnum.ReplyConnect)
+            {
+                // 检测用户是否存在
+                foreach (var _user in _userList)
+                {
+                    if (_user.Ip.ToString() == messageType.Sender)
+                    {
+                        Console.WriteLine("用户已存在：" + _user);
+                        return;
+                    }
+                }
+
+                // 如果是回复连接的消息，则将该用户添加到用户列表中
+                User user = new User(
+                    IPAddress.Parse(messageType.Sender),
+                    UdpReceiveThread.ReceivePort,
+                    messageType.Sender
+                );
+                UserListChangeEvent?.Invoke(user);
+                _userList.Add(user);
+                Console.WriteLine("添加用户：" + user);
+            }
+        }
+    }
+}

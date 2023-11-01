@@ -15,13 +15,14 @@ namespace LinGuGu2.Service
         {
         }
 
-        public MessageType(string type, string message, string sender, string receiver, string time)
+        public MessageType(MessageTypeEnum type, string message, string sender, string receiver)
         {
             Type = type;
             Message = message;
             Sender = sender;
             Receiver = receiver;
-            Time = time;
+            // 获取当前时间
+            Time = DateTime.Now.ToString();
         }
 
         public MessageType(string json)
@@ -52,7 +53,7 @@ namespace LinGuGu2.Service
         /// <summary>
         /// 消息类型
         /// </summary>
-        public string Type { get; set; }
+        public MessageTypeEnum Type { get; set; }
 
         /// <summary>
         /// 消息内容
@@ -78,5 +79,50 @@ namespace LinGuGu2.Service
         {
             return JsonConvert.SerializeObject(this);
         }
+    }
+
+    // 消息类型
+    [Serializable]
+    public enum MessageTypeEnum
+    {
+        /// <summary>
+        /// 普通消息
+        /// </summary>
+        Normal = 0,
+
+        /// <summary>
+        /// 请求连接
+        /// </summary>
+        RequestConnect = 1,
+
+        /// <summary>
+        /// 回复连接
+        /// </summary>
+        ReplyConnect = 2,
+
+        /// <summary>
+        /// 请求断开连接
+        /// </summary>
+        RequestDisconnect = 3,
+
+        /// <summary>
+        /// 回复断开连接
+        /// </summary>
+        ReplyDisconnect = 4,
+
+        /// <summary>
+        /// 请求获取用户列表
+        /// </summary>
+        RequestUserList = 5,
+
+        /// <summary>
+        /// 回复获取用户列表
+        /// </summary>
+        ReplyUserList = 6,
+
+        /// <summary>
+        /// 请求获取聊天记录
+        /// </summary>
+        RequestChatRecord = 7
     }
 }
