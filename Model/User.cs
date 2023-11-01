@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Windows;
 using System.Windows.Documents;
+using LinGuGu2.Model;
 using LinGuGu2.Service;
 
 namespace LinGuGu2.Util
@@ -18,7 +19,6 @@ namespace LinGuGu2.Util
             Ip = ip;
             Port = port;
             Name = name;
-            _messageList = new List<MessageType>();
         }
 
         /// <summary>
@@ -36,17 +36,16 @@ namespace LinGuGu2.Util
         /// </summary>
         public string Name { get; set; }
 
-        public Action<MessageType> MessageListChangeEvent;
-        private List<MessageType> _messageList;
-        public List<MessageType> MessageList => _messageList;
+        public Action<ChatMessageType> MessageListChangeEvent;
+        public List<ChatMessageType> MessageList { get; private set; } = new();
         
         // 当List发生变化时触发事件
-        public void AddMessage(MessageType messageType, bool isFrontUser=true)
+        public void AddMessage(ChatMessageType message, bool isFrontUser=true)
         {
-            _messageList.Add(messageType);
+            MessageList.Add(message);
             if (isFrontUser)
             {
-                MessageListChangeEvent?.Invoke(messageType);
+                MessageListChangeEvent?.Invoke(message);
             }
         }
 

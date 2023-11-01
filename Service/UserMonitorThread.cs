@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
+using LinGuGu2.Model;
 using LinGuGu2.Util;
 
 namespace LinGuGu2.Service
@@ -69,18 +70,13 @@ namespace LinGuGu2.Service
                                 var ip = netId0 + "." + netId1 + "." + netId2 + "." + netId3;
 
                                 // 发送连接请求
-                                MessageType messageType = new MessageType
-                                {
-                                    Type = MessageTypeEnum.RequestConnect,
-                                    Message = "",
-                                    Sender = LocalAccount.GetInstance.LocalIp.ToString(),
-                                    Receiver = ip,
-                                    Time = new DateTime().ToString()
-                                };
-                                Console.WriteLine(ip);
+                                MessageType messageType = new MessageType(MessageTypeEnum.RequestConnect,
+                                    "",
+                                    LocalAccount.GetInstance.LocalIp.ToString(),
+                                    ip.ToString()
+                                );
                                 UdpUtil.SendMsg(messageType.ToJson(), IPAddress.Parse(ip),
                                     UdpReceiveThread.ReceivePort);
-                                // Console.WriteLine("发送连接请求"+messageType.ToJson());
                             }
                         }
                     }
@@ -96,7 +92,13 @@ namespace LinGuGu2.Service
             {
                 if (_userList[i].Ip.ToString() == messageType.Sender)
                 {
-                    _userList[i].AddMessage(messageType);
+                    ChatMessageType message = new ChatMessageType
+                    (
+                        false,
+                        messageType.Message,
+                        messageType.Time
+                    );
+                    _userList[i].AddMessage(message);
                     return;
                 }
             }
@@ -108,12 +110,12 @@ namespace LinGuGu2.Service
             {
                 // 如果是请求连接的消息，则回复连接
                 MessageType replyMessageType = new MessageType
-                {
-                    Type = MessageTypeEnum.ReplyConnect,
-                    Message = "",
-                    Sender = LocalAccount.GetInstance.LocalIp.ToString(),
-                    Receiver = messageType.Sender,
-                };
+                (
+                    MessageTypeEnum.ReplyConnect,
+                    "",
+                    LocalAccount.GetInstance.LocalIp.ToString(),
+                    messageType.Sender
+                );
                 UdpUtil.SendMsg(replyMessageType.ToJson(), IPAddress.Parse(messageType.Sender),
                     UdpReceiveThread.ReceivePort);
             }
@@ -124,11 +126,11 @@ namespace LinGuGu2.Service
             if (messageType.Type == MessageTypeEnum.ReplyConnect)
             {
                 // 检测用户是否存在
-                foreach (var _user in _userList)
+                foreach (var user1 in _userList)
                 {
-                    if (_user.Ip.ToString() == messageType.Sender)
+                    if (user1.Ip.ToString() == messageType.Sender)
                     {
-                        Console.WriteLine("用户已存在：" + _user);
+                        Console.WriteLine("用户已存在：" + user1);
                         return;
                     }
                 }
@@ -139,6 +141,12 @@ namespace LinGuGu2.Service
                     UdpReceiveThread.ReceivePort,
                     messageType.Sender
                 );
+
+                if (messageType.Sender == LocalAccount.GetInstance.LocalIp.ToString())
+                {
+                    user.Name = LocalAccount.GetInstance.Name;
+                }
+
                 UserListChangeEvent?.Invoke(user);
                 _userList.Add(user);
                 Console.WriteLine("添加用户：" + user);

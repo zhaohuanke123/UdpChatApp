@@ -45,6 +45,7 @@ namespace LinGuGu2.Service
                     continue;
 
                 string message = Encoding.UTF8.GetString(buffer, 0, length);
+                
                 MessageType type = new MessageType(message);
                 if (type.Type == MessageTypeEnum.Normal)
                 {
@@ -58,8 +59,7 @@ namespace LinGuGu2.Service
                 {
                     ReceiveRequestEvent?.Invoke(type);
                 }
-
-                Console.WriteLine("Receive:" + message);
+                Console.WriteLine("UdpReceiveThread Receive:" + message);
             }
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
@@ -22,7 +23,7 @@ namespace LinGuGu2.Service
             Sender = sender;
             Receiver = receiver;
             // 获取当前时间
-            Time = DateTime.Now.ToString();
+            Time = DateTime.Now;
         }
 
         public MessageType(string json)
@@ -34,15 +35,19 @@ namespace LinGuGu2.Service
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                // Console.WriteLine(e);
                 Console.Error.WriteLine("Json解析错误");
+                Console.Error.WriteLine("Receive:" + json);
             }
 
-            Type = type.Type;
-            Message = type.Message;
-            Sender = type.Sender;
-            Receiver = type.Receiver;
-            Time = type.Time;
+            if (type != null)
+            {
+                Type = type.Type;
+                Message = type.Message;
+                Sender = type.Sender;
+                Receiver = type.Receiver;
+                Time = type.Time;
+            }
         }
 
         public string ToJson()
@@ -73,7 +78,7 @@ namespace LinGuGu2.Service
         /// <summary>
         /// 发送时间
         /// </summary>
-        public string Time { get; set; }
+        public DateTime Time { get; set; }
 
         public override string ToString()
         {

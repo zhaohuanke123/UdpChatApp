@@ -148,7 +148,8 @@
                             <DropShadowEffect BlurRadius="20" ShadowDepth="1" Direction="-90" Opacity="0.1" />
                         </Grid.Effect>
 
-                        <TextBlock Text="MoonLab Std" FontSize="16" Margin="20 15" HorizontalAlignment="Left" />
+                        <TextBlock x:Name="ChatUserName" 
+                            Text="MoonLab Std" FontSize="16" Margin="20 15" HorizontalAlignment="Left" />
                     </Grid>
 
                     <!--聊天界面-->

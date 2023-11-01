@@ -69,7 +69,7 @@ namespace LinGuGu2.UserControls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/LinGuGu2;component/usercontrols/menubutton.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/UdpChatApp;component/usercontrols/menubutton.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\UserControls\MenuButton.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

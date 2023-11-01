@@ -25,7 +25,7 @@ namespace LinGuGu2.Util
         public IPAddress LocalIp { get; set; } // 本机的局域网ip
         public int LocalPort { get; set; } // 本机的端口号
 
-        public string Name { get; set; } = "123"; // 本机的名字
+        public string Name { get; set; } = "localHost"; // 本机的名字
 
         // 子网掩码
         public IPAddress SubnetMask { get; set; }

@@ -7,7 +7,7 @@
     <ProjectGuid>{A1984662-DD01-4E73-B0D6-3D1D51E97593}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>LinGuGu2</RootNamespace>
-    <AssemblyName>LinGuGu2</AssemblyName>
+    <AssemblyName>UdpChatApp</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -31,6 +31,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -96,6 +97,9 @@
     </ApplicationDefinition>
     <Compile Include="Behaviors\GridAdorner.cs" />
     <Compile Include="Behaviors\WindowResizeAdorner.cs" />
+    <Compile Include="Model\ChatMessageType.cs" />
+    <Compile Include="Model\LocalAccount.cs" />
+    <Compile Include="Model\User.cs" />
     <Compile Include="Service\MessageType.cs" />
     <Compile Include="Service\UdpReceiveThread.cs" />
     <Compile Include="Service\UdpUtil.cs" />
@@ -124,9 +128,7 @@
     <Compile Include="UserControls\UserImage.xaml.cs">
       <DependentUpon>UserImage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Util\LocalAccount.cs" />
     <Compile Include="Util\MessageQueue.cs" />
-    <Compile Include="Util\User.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
