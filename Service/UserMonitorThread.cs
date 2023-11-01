@@ -12,9 +12,8 @@ namespace LinGuGu2.Service
     /// </summary>
     public class UserMonitorThread
     {
-        List<User> _userList = new List<User>();
+        List<User> _userList = new();
         public List<User> UserList => _userList;
-        public static Action<User> UserListChangeEvent;
 
         public UserMonitorThread()
         {
@@ -25,6 +24,12 @@ namespace LinGuGu2.Service
 
         public void RunMonitor()
         {
+            if (LocalAccount.GetInstance.LocalIp == IPAddress.Parse("127.0.0.1"))
+            {
+                Console.Error.WriteLine("未连接网络");
+                return;
+            }
+
             // 获取子网掩码
             var subnetMask = LocalAccount.GetInstance.SubnetMask;
             // 获取本机的ip
@@ -147,7 +152,6 @@ namespace LinGuGu2.Service
                     user.Name = LocalAccount.GetInstance.Name;
                 }
 
-                UserListChangeEvent?.Invoke(user);
                 _userList.Add(user);
                 Console.WriteLine("添加用户：" + user);
             }

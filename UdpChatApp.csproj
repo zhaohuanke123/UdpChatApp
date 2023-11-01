@@ -98,6 +98,7 @@
     <Compile Include="Behaviors\GridAdorner.cs" />
     <Compile Include="Behaviors\WindowResizeAdorner.cs" />
     <Compile Include="Model\ChatMessageType.cs" />
+    <Compile Include="Model\DataLoader.cs" />
     <Compile Include="Model\LocalAccount.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Service\MessageType.cs" />

@@ -7,7 +7,7 @@ using System.Windows.Documents;
 using LinGuGu2.Model;
 using LinGuGu2.Service;
 
-namespace LinGuGu2.Util
+namespace LinGuGu2.Model
 {
     /// <summary>
     /// 储存局域网中用户的信息
@@ -36,14 +36,16 @@ namespace LinGuGu2.Util
         /// </summary>
         public string Name { get; set; }
 
+        public Boolean IsOnline { get; set; } = false;
+
         public Action<ChatMessageType> MessageListChangeEvent;
         public List<ChatMessageType> MessageList { get; private set; } = new();
-        
+
         // 当List发生变化时触发事件
-        public void AddMessage(ChatMessageType message, bool isFrontUser=true)
+        public void AddMessage(ChatMessageType message)
         {
             MessageList.Add(message);
-            if (isFrontUser)
+            if (!message.IsMyMessage)
             {
                 MessageListChangeEvent?.Invoke(message);
             }
@@ -51,7 +53,7 @@ namespace LinGuGu2.Util
 
         public override string ToString()
         {
-            return  Name;
+            return Name;
         }
     }
 }

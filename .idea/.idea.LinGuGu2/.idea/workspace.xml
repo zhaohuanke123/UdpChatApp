@@ -11,50 +11,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e68981f-2e03-484b-bfc5-2c81754381ed" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.LinGuGu2/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Model/ChatMessageType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LinGuGu2.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UdpChatApp.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LinGuGu2.sln" beforeDir="false" afterPath="$PROJECT_DIR$/UdpChatApp.sln" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model/DataLoader.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.LinGuGu2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LinGuGu2/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/App.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Properties/Resources.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Properties/Resources.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/MessageType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/MessageType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/UdpReceiveThread.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/UdpReceiveThread.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/LocalAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Model/LocalAccount.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Model/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Model/User.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Service/UserMonitorThread.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/UserMonitorThread.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Util/LocalAccount.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Model/LocalAccount.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Util/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Model/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/LinGuGu2.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/UdpChatApp.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/LinGuGu2.exe.config" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/UdpChatApp.exe.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/Debug/LinGuGu2.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/UdpChatApp.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UdpChatApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UdpChatApp.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserControls/UserChat.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/UserControls/UserChat.xaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserControls/UserChat.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UserControls/UserChat.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/UdpChatApp.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/UdpChatApp.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/Debug/UdpChatApp.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/UdpChatApp.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/App.baml" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/App.baml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/App.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/App.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/App.g.i.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/App.g.i.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/LinGuGu2.exe" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/LinGuGu2.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/LinGuGu2.g.resources" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/LinGuGu2.g.resources" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/LinGuGu2.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/LinGuGu2.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/MainWindow.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/MainWindow.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/MainWindow.g.i.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/MainWindow.g.i.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/AccountMenuButton.baml" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/AccountMenuButton.baml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/AccountMenuButton.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/AccountMenuButton.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/AccountMenuButton.g.i.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/AccountMenuButton.g.i.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/Item.baml" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/Item.baml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/Item.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/Item.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/Item.g.i.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/Item.g.i.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/MenuButton.baml" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/MenuButton.baml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/MenuButton.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/MenuButton.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/MenuButton.g.i.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/MenuButton.g.i.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/Messagechat.baml" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/Messagechat.baml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/Messagechat.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/Messagechat.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/Messagechat.g.i.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/Messagechat.g.i.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/MyMessageChat.baml" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/MyMessageChat.baml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/MyMessageChat.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/MyMessageChat.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/MyMessageChat.g.i.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/MyMessageChat.g.i.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/UserChat.baml" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/UserChat.baml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/UserChat.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/UserChat.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/UserChat.g.i.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/UserChat.g.i.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/UserImage.baml" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/UserImage.baml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/UserImage.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/UserImage.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/UserImage.g.i.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/UserImage.g.i.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,12 +42,15 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/105da1159ec9496ab9310694c7b11dd2532bb0/10/f2affb30/DateTime.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/105da1159ec9496ab9310694c7b11dd2532bb0/6b/1fb807a4/ArrayList.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/105da1159ec9496ab9310694c7b11dd2532bb0/c7/f8a1268d/Object.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/105da1159ec9496ab9310694c7b11dd2532bb0/ed/058efda1/Action`1.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/105da1159ec9496ab9310694c7b11dd2532bb0/f0/d1693486/Thread.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/16477ae1886447bfade52ff93bdc1d22604f88/38/5aaa6c2f/Control.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/16477ae1886447bfade52ff93bdc1d22604f88/40/def70a0a/AdornerLayer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/16477ae1886447bfade52ff93bdc1d22604f88/49/4d3774df/Panel.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/16477ae1886447bfade52ff93bdc1d22604f88/60/c348f61b/UIElementCollection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/16477ae1886447bfade52ff93bdc1d22604f88/6d/1a07156c/MessageBox.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/16477ae1886447bfade52ff93bdc1d22604f88/c6/2fb34fc7/WindowState.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/16477ae1886447bfade52ff93bdc1d22604f88/e9/defb2b14/FrameworkElement.cs" root0="SKIP_HIGHLIGHTING" />
@@ -79,19 +59,22 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/3941db03de694c32b6bb51b86e38ada84b2a00/e5/af96d0c3/PackIconMaterialKind.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/41914444499f4996a3e6af79cf6c1fdb574b98/06/646cdc84/RuntimeType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/af9ee0c5a8cb435a8fc77f3f1c1a3657ac310/bb/db5c841a/JsonConverter.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bef42d0ad64547f7b348680dd7725a1a38f388/41/c1c84312/UIElement.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bef42d0ad64547f7b348680dd7725a1a38f388/83/09134079/Brushes.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bef42d0ad64547f7b348680dd7725a1a38f388/cb/39ce7322/Visibility.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bef42d0ad64547f7b348680dd7725a1a38f388/d5/f4d2a037/ImageSource.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ce12dc1aa9e14b919d8c1321c95d47fb35e718/ab/1ec095d7/IPAddress.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ce12dc1aa9e14b919d8c1321c95d47fb35e718/b7/9f6fe2e6/UdpClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ce12dc1aa9e14b919d8c1321c95d47fb35e718/c2/98fdef72/Socket.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ce12dc1aa9e14b919d8c1321c95d47fb35e718/cb/2967153f/AddressFamily.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/MainWindow.xaml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/MainWindow.xaml.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Model/LocalAccount.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Model/User.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Properties/AssemblyInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Service/UdpReceiveThread.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Service/UserMonitorThread.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/UDPTest/Properties/AssemblyInfo.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Util/LocalAccount.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Util/User.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -191,7 +174,7 @@
       <workItem from="1698723375088" duration="12230000" />
       <workItem from="1698752829321" duration="7397000" />
       <workItem from="1698763007191" duration="13759000" />
-      <workItem from="1698823326672" duration="3261000" />
+      <workItem from="1698823326672" duration="13821000" />
     </task>
     <task id="LOCAL-00001" summary="创建项目">
       <option name="closed" value="true" />
@@ -233,7 +216,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698812690415</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="完善消息">
+      <option name="closed" value="true" />
+      <created>1698826715856</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1698826715856</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -270,7 +261,8 @@
     <MESSAGE value="添加" />
     <MESSAGE value="测试" />
     <MESSAGE value="完成基本功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="完成基本功能" />
+    <MESSAGE value="完善消息" />
+    <option name="LAST_COMMIT_MESSAGE" value="完善消息" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

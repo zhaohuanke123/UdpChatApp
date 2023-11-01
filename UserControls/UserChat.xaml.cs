@@ -13,16 +13,16 @@ namespace LinGuGu2.UserControls
 
         public string Username
         {
-            get { return (string)GetValue(UsernameProperty); }
-            set { SetValue(UsernameProperty, value); }
+            get => (string)GetValue(UsernameProperty);
+            set => SetValue(UsernameProperty, value);
         }
 
         public static readonly DependencyProperty UsernameProperty = DependencyProperty.Register("Username", typeof(string), typeof(UserChat));
 
         public ImageSource Image
         {
-            get { return (ImageSource)GetValue(ImageProperty); }
-            set { SetValue(ImageProperty, value); }
+            get => (ImageSource)GetValue(ImageProperty);
+            set => SetValue(ImageProperty, value);
         }
 
         public static readonly DependencyProperty ImageProperty = DependencyProperty.Register("Image", typeof(ImageSource), typeof(UserChat));

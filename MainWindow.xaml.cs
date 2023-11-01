@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
 using System.Windows.Documents;
@@ -20,7 +21,9 @@ namespace LinGuGu2
         {
             InitializeComponent();
 
-            ChatStackPanel.Children.Clear();
+            // ChatStackPanel.Children.Clear();
+            // ChatPanel.Visibility = Visibility.Collapsed;
+
 
             UdpReceiveThread udpReceiveThread = new UdpReceiveThread(LocalAccount.GetInstance.LocalIp);
             Thread thread1 = new Thread(udpReceiveThread.RunReceive);
@@ -30,40 +33,7 @@ namespace LinGuGu2
             Thread thread = new Thread(userMonitorThread.RunMonitor);
             thread.Start();
 
-            UserMonitorThread.UserListChangeEvent += (user =>
-            {
-                App.Current.Dispatcher.Invoke(
-                    new Action(() =>
-                    {
-                        Item item = new Item();
-                        item.Title = user.Name;
-
-                        item.MouseDoubleClick += (sender, args) =>
-                        {
-                            // if (_currentUser == user)
-                            //     return;
-
-                            if (_currentUser != null)
-                            {
-                                _currentUser.MessageListChangeEvent -= OnFrontUserMessageHandle;
-                            }
-
-                            _currentUser = user;
-                            _currentUser.MessageListChangeEvent += OnFrontUserMessageHandle;
-                            ChatStackPanel.Children.Clear();
-                            // 将消息列表中的消息显示到聊天框中
-                            for (var i = 0; i < user.MessageList.Count; i++)
-                            {
-                                PushAnMessage(user.MessageList[i].Message, user.MessageList[i].IsMyMessage);
-                            }
-
-                            ChatUserName.Text = user.Name;
-                        };
-
-                        GroupStack.Children.Add(item);
-                    })
-                );
-            });
+            UserListView.ItemsSource = userMonitorThread.UserList;
         }
 
         private void OnBackUserMessageHandle(MessageType messageType)
@@ -82,7 +52,12 @@ namespace LinGuGu2
         private void OnFrontUserMessageHandle(ChatMessageType message)
         {
             App.Current.Dispatcher.Invoke(
-                new Action(() => { PushAnMessage(message.Message, false); })
+                new Action(() =>
+                {
+                    var elements =
+                        DataLoader.GetUCsForNewMessage(_currentUser.MessageList, _currentUser);
+                    ChatStackPanel.AddAllMessage(elements);
+                })
             );
         }
 
@@ -131,10 +106,13 @@ namespace LinGuGu2
                 TxtMessage.Text,
                 messageType.Time
             );
-            PushAnMessage(chatMessageType.Message, true);
-            _currentUser.AddMessage(chatMessageType, false);
-            UdpUtil.SendMsg(messageType.ToJson(), _currentUser.Ip, UdpReceiveThread.ReceivePort);
+            _currentUser.AddMessage(chatMessageType);
             TxtMessage.Text = "";
+
+            var elements = DataLoader.GetUCsForNewMessage(_currentUser.MessageList, _currentUser);
+            ChatStackPanel.AddAllMessage(elements);
+
+            UdpUtil.SendMsg(messageType.ToJson(), _currentUser.Ip, UdpReceiveThread.ReceivePort);
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -143,21 +121,6 @@ namespace LinGuGu2
             {
                 MaximizeCheck();
             }
-        }
-
-        private void PushAnMessage(String message, bool isMyMessage = true)
-        {
-            if (isMyMessage)
-            {
-                MyMessageChat messageChat = new MyMessageChat { Message = message };
-                ChatStackPanel.Children.Add(messageChat);
-            }
-            else
-            {
-                MessageChat messageChat = new MessageChat { Message = message, Color = Brushes.Green };
-                ChatStackPanel.Children.Add(messageChat);
-            }
-            ChatScroll.ScrollToBottom();
         }
 
         private void MinimizeButtonClick(object sender, RoutedEventArgs e)
@@ -195,6 +158,35 @@ namespace LinGuGu2
             // 关闭窗口
             Application.Current.Shutdown();
             Environment.Exit(0);
+        }
+
+        private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (UserListView.SelectedItem is User selectedUser)
+            {
+                // 访问选中用户的 MessageList
+                List<ChatMessageType> messages = selectedUser.MessageList;
+
+                // 在这里处理选中用户的消息列表
+                ChatPanel.Visibility = Visibility.Visible;
+
+                if (_currentUser != null)
+                {
+                    _currentUser.MessageListChangeEvent -= OnFrontUserMessageHandle;
+                }
+
+                _currentUser = selectedUser;
+                _currentUser.MessageListChangeEvent += OnFrontUserMessageHandle;
+
+                ChatStackPanel.Children.Clear();
+                // 将消息列表中的消息显示到聊天框中
+                var elements = DataLoader.GetUCsMessageList(_currentUser.MessageList, _currentUser);
+                ChatStackPanel.AddAllMessage(elements);
+
+                ChatUserName.Text = selectedUser.Name;
+
+                ChatScroll.ScrollToBottom();
+            }
         }
     }
 }

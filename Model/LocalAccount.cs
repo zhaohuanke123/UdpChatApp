@@ -3,11 +3,11 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
-namespace LinGuGu2.Util
+namespace LinGuGu2.Model
 {
     public class LocalAccount
     {
-        private static LocalAccount _instance = new LocalAccount();
+        private static LocalAccount _instance = new();
 
         public static LocalAccount GetInstance
         {
