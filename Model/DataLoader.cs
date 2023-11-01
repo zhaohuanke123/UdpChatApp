@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using LinGuGu2.Service;
 using LinGuGu2.UserControls;
+using Newtonsoft.Json;
 
 namespace LinGuGu2.Model;
 
@@ -107,7 +110,19 @@ public static class DataLoader
             return elements;
         }
 
+
         ChatMessageType newMessage = messageList.Last();
+
+        if (newMessage.Message == "$对方已下线$")
+        {
+            // 去掉$符合
+            var title = newMessage.Message.Substring(1, newMessage.Message.Length - 2);
+            elements.Add(new ChatSeparator
+            {
+                Title = title
+            });
+        }
+
         if (messageList.Count > 1)
         {
             ChatMessageType lastMessage = messageList[messageList.Count - 2];
@@ -190,5 +205,80 @@ public static class DataLoader
         {
             stackPanel.Children.Add(element);
         }
+    }
+
+    public static void SaveData()
+    {
+        if (MainWindow.UserMonitorThread != null)
+        {
+            var userList = MainWindow.UserMonitorThread.UserList;
+
+            // 将用户列表保存到本地
+            var json = JsonConvert.SerializeObject(userList);
+
+            string folderPath = "./data";
+            // 文件夹路径
+            string filePath = Path.Combine(folderPath, "userList.json"); // 文件路径
+
+            // 检查文件夹是否存在，如果不存在则创建
+            if (!Directory.Exists(folderPath))
+            {
+                Directory.CreateDirectory(folderPath);
+            }
+
+            // 检查文件是否存在，如果不存在则创建一个空文件
+            if (!File.Exists(filePath))
+            {
+                File.Create(filePath).Close(); // 创建文件并关闭以释放资源}
+            }
+
+            //  写入到本地文件 
+            try
+            {
+                File.WriteAllText(filePath, json);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            Console.WriteLine("保存用户列表成功" + json);
+        }
+    }
+
+    public static List<User> LoadData()
+    {
+        string folderPath = "./data";
+        // 文件夹路径
+        string filePath = Path.Combine(folderPath, "userList.json"); // 文件路径
+
+        // 检查文件夹是否存在，如果不存在则创建
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
+        }
+
+        // 检查文件是否存在，如果不存在则创建一个空文件
+        if (!File.Exists(filePath))
+        {
+            File.Create(filePath).Close(); // 创建文件并关闭以释放资源}
+        }
+
+        // 读取本地文件
+        try
+        {
+            var json = File.ReadAllText(filePath);
+            var userList = JsonConvert.DeserializeObject<List<User>>(json);
+            if (userList != null)
+            {
+                return userList;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        return new List<User>();
     }
 }

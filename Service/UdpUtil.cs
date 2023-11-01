@@ -7,13 +7,13 @@ namespace LinGuGu2.Service
 {
     public class UdpUtil
     {
-        public static void SendMsg(String message, IPAddress endIp, int port, int reSentTime = 5)
+        public static void SendMsg(String message, string endIp, int port, int reSentTime = 5)
         {
             if (reSentTime <= 0)
                 return;
             try
             {
-                EndPoint point = new IPEndPoint(endIp, port);
+                EndPoint point = new IPEndPoint(IPAddress.Parse(endIp), port);
                 int sioUdpConnReset = -1744830452;
                 UdpReceiveThread.Client?.IOControl(
                     (IOControlCode)sioUdpConnReset,

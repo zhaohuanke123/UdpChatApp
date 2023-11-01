@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
+using System.Windows.Media;
 using LinGuGu2.Model;
 using LinGuGu2.Util;
 
@@ -12,11 +13,12 @@ namespace LinGuGu2.Service
     /// </summary>
     public class UserMonitorThread
     {
-        List<User> _userList = new();
-        public List<User> UserList => _userList;
+        public List<User> UserList { get; set; }
 
-        public UserMonitorThread()
+        public UserMonitorThread(List<User> userList)
         {
+            UserList = userList;
+
             UdpReceiveThread.ReceiveReplyEvent += ReceiveReplyAction;
             UdpReceiveThread.ReceiveRequestEvent += ReceiveRequestAction;
             UdpReceiveThread.ReceiveMessageEvent += ReceiveMessageAction;
@@ -80,7 +82,7 @@ namespace LinGuGu2.Service
                                     LocalAccount.GetInstance.LocalIp.ToString(),
                                     ip.ToString()
                                 );
-                                UdpUtil.SendMsg(messageType.ToJson(), IPAddress.Parse(ip),
+                                UdpUtil.SendMsg(messageType.ToJson(), ip,
                                     UdpReceiveThread.ReceivePort);
                             }
                         }
@@ -91,11 +93,33 @@ namespace LinGuGu2.Service
             }
         }
 
+        public void CheckUser()
+        {
+            while (true)
+            {
+                // 遍历所有用户，检测是否在线
+                for (var i = 0; i < UserList.Count; i++)
+                {
+                    if (UserList[i].CheckOnlineCount > 0)
+                    {
+                        UserList[i].CheckOnlineCount--;
+                    }
+                    else
+                    {
+                        UserList[i].IsOnline = false;
+                        UserList[i].OfflineEvent?.Invoke();
+                    }
+                }
+
+                Thread.Sleep(1000);
+            }
+        }
+
         private void ReceiveMessageAction(MessageType messageType)
         {
-            for (var i = 0; i < _userList.Count; i++)
+            for (var i = 0; i < UserList.Count; i++)
             {
-                if (_userList[i].Ip.ToString() == messageType.Sender)
+                if (UserList[i].Ip.ToString() == messageType.Sender)
                 {
                     ChatMessageType message = new ChatMessageType
                     (
@@ -103,7 +127,7 @@ namespace LinGuGu2.Service
                         messageType.Message,
                         messageType.Time
                     );
-                    _userList[i].AddMessage(message);
+                    UserList[i].AddMessage(message);
                     return;
                 }
             }
@@ -121,7 +145,7 @@ namespace LinGuGu2.Service
                     LocalAccount.GetInstance.LocalIp.ToString(),
                     messageType.Sender
                 );
-                UdpUtil.SendMsg(replyMessageType.ToJson(), IPAddress.Parse(messageType.Sender),
+                UdpUtil.SendMsg(replyMessageType.ToJson(), messageType.Sender,
                     UdpReceiveThread.ReceivePort);
             }
         }
@@ -130,11 +154,19 @@ namespace LinGuGu2.Service
         {
             if (messageType.Type == MessageTypeEnum.ReplyConnect)
             {
+                User user2 = new User(
+                    messageType.Sender,
+                    UdpReceiveThread.ReceivePort,
+                    messageType.Sender
+                );
+                UserList.Add(user2);
                 // 检测用户是否存在
-                foreach (var user1 in _userList)
+                foreach (var user1 in UserList)
                 {
                     if (user1.Ip.ToString() == messageType.Sender)
                     {
+                        user1.CheckOnlineCount = 5;
+                        user1.OnLineEvent?.Invoke();
                         Console.WriteLine("用户已存在：" + user1);
                         return;
                     }
@@ -142,7 +174,7 @@ namespace LinGuGu2.Service
 
                 // 如果是回复连接的消息，则将该用户添加到用户列表中
                 User user = new User(
-                    IPAddress.Parse(messageType.Sender),
+                    messageType.Sender,
                     UdpReceiveThread.ReceivePort,
                     messageType.Sender
                 );
@@ -152,7 +184,7 @@ namespace LinGuGu2.Service
                     user.Name = LocalAccount.GetInstance.Name;
                 }
 
-                _userList.Add(user);
+                UserList.Add(user);
                 Console.WriteLine("添加用户：" + user);
             }
         }

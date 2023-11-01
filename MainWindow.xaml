@@ -101,7 +101,7 @@
             <!--chat items section-->
             <Border Grid.Column="1" Grid.Row="1">
                 <Grid>
-                    <!--seprator-->
+                    <!--separator-->
                     <StackPanel Orientation="Horizontal" Margin="30 0 0 30">
                         <Rectangle Width="0.8" Stroke="#dadada" VerticalAlignment="Stretch" />
                     </StackPanel>
@@ -111,34 +111,33 @@
                         Margin="30 0 15 0">
                         <TextBlock Text="Persons" Margin="25 15 0 5" Style="{StaticResource TitleText}" />
 
-                        <!--person Items-->
-                        <!-- <uc:Item Title="Cole Strickland" Color="#73afff" -->
-                        <!-- Image="/Images/p1.jpg" /> -->
-                        <!-- <uc:Item Title="Reza Asadi" -->
-                        <!--          Image="/Images/p2.jpg" /> -->
-                        <!-- <uc:Item Title="Gavin Harrison"  -->
-                        <!--          Image="/Images/p3.jpg" /> -->
-                        <!-- <uc:Item Title="Lillian Davis" Color="#5ac795" -->
-                        <!--          Image="/Images/p4.jpg" /> -->
-                        <!-- <StackPanel x:Name="GroupStack"> -->
-                        <!-- </StackPanel> -->
                         <ListView Name="UserListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                   BorderBrush="Transparent"
                                   Background="Transparent">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Border
-                                        Background="White"
-                                        CornerRadius="4">
-                                        <uc:Item Title="{Binding Name}"
-                                                 Image="/Images/p3.jpg" 
-                                                 Color="Green"
-                                                 MouseDoubleClick="Control_OnMouseDoubleClick"/>
-                                    </Border>
+                                    <uc:Item Title="{Binding Name}"
+                                             IsActive="{Binding  Path=IsChatWith}"
+                                             Image="/Images/p3.jpg"
+                                             Color="{Binding Path= Color}"
+                                             MouseLeftButtonDown="UserItemDoubleClick" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
+                        <!-- 去除选中样式 -->
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <ContentPresenter />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ListView.ItemContainerStyle>
                         </ListView>
-
+                        
                         <Button Content="Show All" Style="{StaticResource ShowBoxButton}" />
 
                     </StackPanel>
@@ -232,7 +231,8 @@
                             </Grid>
 
                             <!--发送按钮-->
-                            <Button Grid.Column="1" Margin="5 0 0 0" Style="{StaticResource TextBoxButton}"
+                            <Button x:Name="SendButton"
+                                    Grid.Column="1" Margin="5 0 0 0" Style="{StaticResource TextBoxButton}"
                                     Click="SendButtonClick">
                                 <icon:PackIconMaterial Kind="Send" Margin="3 0 0 2" Width="16" Foreground="#6f59d4">
                                     <icon:PackIconMaterial.LayoutTransform>

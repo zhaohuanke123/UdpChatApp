@@ -16,6 +16,8 @@ namespace LinGuGu2
     public partial class MainWindow : Window
     {
         User _currentUser;
+        public static UdpReceiveThread UdpReceiveThread;
+        public static UserMonitorThread UserMonitorThread;
 
         public MainWindow()
         {
@@ -24,16 +26,15 @@ namespace LinGuGu2
             // ChatStackPanel.Children.Clear();
             // ChatPanel.Visibility = Visibility.Collapsed;
 
-
-            UdpReceiveThread udpReceiveThread = new UdpReceiveThread(LocalAccount.GetInstance.LocalIp);
-            Thread thread1 = new Thread(udpReceiveThread.RunReceive);
+            UdpReceiveThread = new UdpReceiveThread(LocalAccount.GetInstance.LocalIp);
+            Thread thread1 = new Thread(UdpReceiveThread.RunReceive);
             thread1.Start();
-
-            UserMonitorThread userMonitorThread = new UserMonitorThread();
-            Thread thread = new Thread(userMonitorThread.RunMonitor);
+            
+            UserMonitorThread = new UserMonitorThread(DataLoader.LoadData());
+            Thread thread = new Thread(UserMonitorThread.RunMonitor);
             thread.Start();
 
-            UserListView.ItemsSource = userMonitorThread.UserList;
+            UserListView.ItemsSource = UserMonitorThread.UserList;
         }
 
         private void OnBackUserMessageHandle(MessageType messageType)
@@ -47,6 +48,16 @@ namespace LinGuGu2
                     }
                 })
             );
+        }
+        
+        private void OffLineHandle()
+        {
+            ChatMessageType message = new ChatMessageType(
+                false,
+                "$对方已下线$",
+                DateTime.Now
+            );
+            _currentUser.AddMessage(message);
         }
 
         private void OnFrontUserMessageHandle(ChatMessageType message)
@@ -155,28 +166,32 @@ namespace LinGuGu2
 
         private void CloseButtonClick(object sender, RoutedEventArgs e)
         {
+            DataLoader.SaveData();
             // 关闭窗口
             Application.Current.Shutdown();
             Environment.Exit(0);
         }
 
-        private void Control_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void UserItemDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            var clickedItem = (Item)sender;
+            clickedItem.IsActive = true;
+            
             if (UserListView.SelectedItem is User selectedUser)
             {
-                // 访问选中用户的 MessageList
                 List<ChatMessageType> messages = selectedUser.MessageList;
 
-                // 在这里处理选中用户的消息列表
                 ChatPanel.Visibility = Visibility.Visible;
 
                 if (_currentUser != null)
                 {
                     _currentUser.MessageListChangeEvent -= OnFrontUserMessageHandle;
+                    _currentUser.OfflineEvent -= OffLineHandle;
                 }
 
                 _currentUser = selectedUser;
                 _currentUser.MessageListChangeEvent += OnFrontUserMessageHandle;
+                _currentUser.OfflineEvent += OffLineHandle;
 
                 ChatStackPanel.Children.Clear();
                 // 将消息列表中的消息显示到聊天框中
