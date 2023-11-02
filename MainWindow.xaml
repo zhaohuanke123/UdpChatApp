@@ -111,33 +111,22 @@
                         Margin="30 0 15 0">
                         <TextBlock Text="Persons" Margin="25 15 0 5" Style="{StaticResource TitleText}" />
 
-                        <ListView Name="UserListView" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        <ListView Name="UserListView"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                   BorderBrush="Transparent"
                                   Background="Transparent">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <uc:Item Title="{Binding Name}"
-                                             IsActive="{Binding  Path=IsChatWith}"
+                                             IsActive="{Binding IsChatWith}"
                                              Image="/Images/p3.jpg"
-                                             Color="{Binding Path= Color}"
+                                             Color="{Binding Color}"
+                                             MessageCount="{Binding MessageCount}"
                                              MouseLeftButtonDown="UserItemDoubleClick" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
-                        <!-- 去除选中样式 -->
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="ListViewItem">
-                                                <ContentPresenter />
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </ListView.ItemContainerStyle>
+                           
                         </ListView>
-                        
                         <Button Content="Show All" Style="{StaticResource ShowBoxButton}" />
 
                     </StackPanel>
@@ -201,7 +190,6 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="auto" />
                             </Grid.ColumnDefinitions>
-
                             <!--message textBox-->
                             <Grid>
                                 <TextBlock Margin="15 0 120 0" VerticalAlignment="Center"
@@ -210,26 +198,7 @@
                                            Visibility="{Binding ElementName=TxtMessage,Path=Text.IsEmpty,Converter={StaticResource BoolTovis}}" />
 
                                 <TextBox x:Name="TxtMessage" Style="{StaticResource MessageTextBox}" />
-
-                                <!--按钮组-->
-                                <!-- <StackPanel Orientation="Horizontal" Margin="0 0 8 0" HorizontalAlignment="Right" -->
-                                <!--             VerticalAlignment="Center"> -->
-                                <!-- -->
-                                <!--     <Button Style="{StaticResource TextBoxButton}" Margin="0 0 1 0"> -->
-                                <!--         <icon:PackIconMaterial Kind="BookmarkMultipleOutline" Width="12" -->
-                                <!--                                Foreground="#a6a6a6" /> -->
-                                <!--     </Button> -->
-                                <!-- -->
-                                <!--     <Button Style="{StaticResource TextBoxButton}"> -->
-                                <!--         <icon:PackIconMaterial Kind="Paperclip" Width="12" Foreground="#a6a6a6" /> -->
-                                <!--     </Button> -->
-                                <!-- -->
-                                <!--     <Button Style="{StaticResource TextBoxButton}"> -->
-                                <!--         <icon:PackIconMaterial Kind="MicrophoneOutline" Width="12" Foreground="#a6a6a6" /> -->
-                                <!--     </Button> -->
-                                <!-- </StackPanel> -->
                             </Grid>
-
                             <!--发送按钮-->
                             <Button x:Name="SendButton"
                                     Grid.Column="1" Margin="5 0 0 0" Style="{StaticResource TextBoxButton}"

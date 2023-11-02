@@ -11,22 +11,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e68981f-2e03-484b-bfc5-2c81754381ed" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ViewModel/ViewModelBase.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.LinGuGu2/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.LinGuGu2/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.xaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainWindow.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/MainWindow.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/DataLoader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Model/DataLoader.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Model/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Model/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Service/UdpUtil.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/UdpUtil.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Service/UserMonitorThread.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Service/UserMonitorThread.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserControls/Item.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/UserControls/Item.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserControls/Item.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/UserControls/Item.xaml.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UdpChatApp.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/UdpChatApp.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/UdpChatApp.exe" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/UdpChatApp.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bin/Debug/UdpChatApp.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/bin/Debug/UdpChatApp.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/MainWindow.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/MainWindow.g.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/obj/Debug/MainWindow.g.i.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/MainWindow.g.i.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/Item.baml" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/Item.baml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/Item.g.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/Item.g.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/obj/Debug/UserControls/Item.g.i.cs" beforeDir="false" afterPath="$PROJECT_DIR$/obj/Debug/UserControls/Item.g.i.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +30,7 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/105da1159ec9496ab9310694c7b11dd2532bb0/10/f2affb30/DateTime.cs" root0="SKIP_HIGHLIGHTING" />
@@ -48,6 +44,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/16477ae1886447bfade52ff93bdc1d22604f88/60/c348f61b/UIElementCollection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/16477ae1886447bfade52ff93bdc1d22604f88/6d/1a07156c/MessageBox.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/16477ae1886447bfade52ff93bdc1d22604f88/a8/8a0816ac/UserControl.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/16477ae1886447bfade52ff93bdc1d22604f88/b5/fce9884c/BindingMode.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/16477ae1886447bfade52ff93bdc1d22604f88/c6/2fb34fc7/WindowState.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/16477ae1886447bfade52ff93bdc1d22604f88/df/fe8bf161/Binding.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/16477ae1886447bfade52ff93bdc1d22604f88/e9/defb2b14/FrameworkElement.cs" root0="SKIP_HIGHLIGHTING" />
@@ -73,6 +70,8 @@
     <setting file="file://$PROJECT_DIR$/Service/UdpReceiveThread.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Service/UserMonitorThread.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/UDPTest/Properties/AssemblyInfo.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ViewModel/ViewModelBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://C:/Users/zhk02/RiderProjects/Chat-Messaging-App/obj/Debug/MainWindow.g.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />

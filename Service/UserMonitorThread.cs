@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.Messaging;
 using LinGuGu2.Model;
 using LinGuGu2.Util;
 
@@ -121,7 +122,7 @@ namespace LinGuGu2.Service
             {
                 if (UserList[i].Ip.ToString() == messageType.Sender)
                 {
-                    ChatMessageType message = new ChatMessageType
+                    ChatMessage message = new ChatMessage
                     (
                         false,
                         messageType.Message,
@@ -154,19 +155,13 @@ namespace LinGuGu2.Service
         {
             if (messageType.Type == MessageTypeEnum.ReplyConnect)
             {
-                User user2 = new User(
-                    messageType.Sender,
-                    UdpReceiveThread.ReceivePort,
-                    messageType.Sender
-                );
-                UserList.Add(user2);
                 // 检测用户是否存在
                 foreach (var user1 in UserList)
                 {
-                    if (user1.Ip.ToString() == messageType.Sender)
+                    if (user1.Ip == messageType.Sender)
                     {
                         user1.CheckOnlineCount = 5;
-                        user1.OnLineEvent?.Invoke();
+                        user1.IsOnline = true;
                         Console.WriteLine("用户已存在：" + user1);
                         return;
                     }
@@ -178,6 +173,7 @@ namespace LinGuGu2.Service
                     UdpReceiveThread.ReceivePort,
                     messageType.Sender
                 );
+                user.IsOnline = true;
 
                 if (messageType.Sender == LocalAccount.GetInstance.LocalIp.ToString())
                 {

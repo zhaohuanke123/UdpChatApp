@@ -19,7 +19,7 @@ public static class DataLoader
     /// <param name="messageList">消息列表</param>
     /// <param name="user">对应用户</param>
     /// <returns></returns>
-    public static List<UIElement> GetUCsMessageList(List<ChatMessageType> messageList, User user)
+    public static List<UIElement> GetUCsMessageList(List<ChatMessage> messageList, User user)
     {
         List<UIElement> elements = new List<UIElement>();
         if (messageList == null || messageList.Count == 0)
@@ -31,68 +31,69 @@ public static class DataLoader
         {
             Title = messageList[0].Time.ToString("yyyy-MM-dd")
         });
+        List<ChatMessage> messageListTemp = new List<ChatMessage>();
         for (var i = 0; i < messageList.Count; i++)
         {
-            // 根据不同情况判断
-            // 距离上一条消息发送超过 10分钟
+            messageListTemp.Add(messageList[i]);
+            GetUCsForNewMessage(messageListTemp, user).ForEach(element => elements.Add(element));
 
-            if (i != 0 && messageList[i].Time - messageList[i - 1].Time > new TimeSpan(0, 10, 0))
-            {
-                elements.Add(new ChatSeparator
-                {
-                    Title = messageList[i].Time.ToString("MM-dd HH:mm:ss")
-                });
-                if (!messageList[i].IsMyMessage)
-                {
-                    UserChat userChat = new UserChat
-                    {
-                        Username = user.Name,
-                    };
-                    elements.Add(userChat);
-                }
-            }
-            // 上一个消息是不同人发送的 || 是第一条消息
-            else if (i == 0 || messageList[i].IsMyMessage != messageList[i - 1].IsMyMessage)
-            {
-                if (!messageList[i].IsMyMessage)
-                {
-                    UserChat userChat = new UserChat
-                    {
-                        Username = user.Name,
-                    };
-                    elements.Add(userChat);
-                }
-            }
-
-            if (!messageList[i].IsMyMessage)
-            {
-                MessageChat messageChat = new MessageChat
-                {
-                    Message = messageList[i].Message,
-                    Color = Brushes.Green
-                };
-                TextBlock textBlock = new TextBlock
-                {
-                    Text = messageList[i].Time.ToString("HH:mm:ss"),
-                };
-                textBlock.Style = (Style)Application.Current.Resources["TimeText"];
-                elements.Add(messageChat);
-                elements.Add(textBlock);
-            }
-            else
-            {
-                MyMessageChat myMessageChat = new MyMessageChat
-                {
-                    Message = messageList[i].Message,
-                };
-                TextBlock textBlock = new TextBlock
-                {
-                    Text = messageList[i].Time.ToString("HH:mm:ss"),
-                };
-                textBlock.Style = (Style)Application.Current.Resources["TimeTextRight"];
-                elements.Add(myMessageChat);
-                elements.Add(textBlock);
-            }
+            // if (i != 0 && messageList[i].Time - messageList[i - 1].Time > new TimeSpan(0, 10, 0))
+            // {
+            //     elements.Add(new ChatSeparator
+            //     {
+            //         Title = messageList[i].Time.ToString("MM-dd HH:mm:ss")
+            //     });
+            //     if (!messageList[i].IsMyMessage)
+            //     {
+            //         UserChat userChat = new UserChat
+            //         {
+            //             Username = user.Name,
+            //         };
+            //         elements.Add(userChat);
+            //     }
+            // }
+            // // 上一个消息是不同人发送的 || 是第一条消息
+            // else if (i == 0 || messageList[i].IsMyMessage != messageList[i - 1].IsMyMessage)
+            // {
+            //     if (!messageList[i].IsMyMessage)
+            //     {
+            //         UserChat userChat = new UserChat
+            //         {
+            //             Username = user.Name,
+            //         };
+            //         elements.Add(userChat);
+            //     }
+            // }
+            //
+            // if (!messageList[i].IsMyMessage)
+            // {
+            //     MessageChat messageChat = new MessageChat
+            //     {
+            //         Message = messageList[i].Message,
+            //         Color = Brushes.Green
+            //     };
+            //     TextBlock textBlock = new TextBlock
+            //     {
+            //         Text = messageList[i].Time.ToString("HH:mm:ss"),
+            //     };
+            //     textBlock.Style = (Style)Application.Current.Resources["TimeText"];
+            //     elements.Add(messageChat);
+            //     elements.Add(textBlock);
+            // }
+            // else
+            // {
+            //     MyMessageChat myMessageChat = new MyMessageChat
+            //     {
+            //         Message = messageList[i].Message,
+            //     };
+            //     TextBlock textBlock = new TextBlock
+            //     {
+            //         Text = messageList[i].Time.ToString("HH:mm:ss"),
+            //     };
+            //     textBlock.Style = (Style)Application.Current.Resources["TimeTextRight"];
+            //     elements.Add(myMessageChat);
+            //     elements.Add(textBlock);
+            // }
         }
 
         return elements;
@@ -102,7 +103,7 @@ public static class DataLoader
     ///  根据上一条消息列表获取对应的UIElement列表
     ///  用于新消息
     ///  </summary>
-    public static List<UIElement> GetUCsForNewMessage(List<ChatMessageType> messageList, User user)
+    public static List<UIElement> GetUCsForNewMessage(List<ChatMessage> messageList, User user)
     {
         List<UIElement> elements = new List<UIElement>();
         if (messageList == null || messageList.Count == 0)
@@ -110,22 +111,28 @@ public static class DataLoader
             return elements;
         }
 
+        ChatMessage newMessage = messageList.Last();
 
-        ChatMessageType newMessage = messageList.Last();
-
-        if (newMessage.Message == "$对方已下线$")
+        if (newMessage.Type == ChatMessageTypeEnum.Online)
         {
-            // 去掉$符合
-            var title = newMessage.Message.Substring(1, newMessage.Message.Length - 2);
             elements.Add(new ChatSeparator
             {
-                Title = title
+                Title = "对方上线了"
             });
+            return elements;
+        }
+        else if (newMessage.Type == ChatMessageTypeEnum.Offline)
+        {
+            elements.Add(new ChatSeparator
+            {
+                Title = "对方下线了"
+            });
+            return elements;
         }
 
         if (messageList.Count > 1)
         {
-            ChatMessageType lastMessage = messageList[messageList.Count - 2];
+            ChatMessage lastMessage = messageList[messageList.Count - 2];
 
             Boolean isTimeSpanOut = false;
             isTimeSpanOut = newMessage.Time - lastMessage.Time > new TimeSpan(0, 10, 0);

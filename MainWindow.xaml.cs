@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.Messaging;
 using LinGuGu2.Behaviors;
 using LinGuGu2.Model;
 using LinGuGu2.Service;
@@ -23,44 +24,26 @@ namespace LinGuGu2
         {
             InitializeComponent();
 
-            // ChatStackPanel.Children.Clear();
-            // ChatPanel.Visibility = Visibility.Collapsed;
+            ChatStackPanel.Children.Clear();
+            ChatPanel.Visibility = Visibility.Collapsed;
 
             UdpReceiveThread = new UdpReceiveThread(LocalAccount.GetInstance.LocalIp);
             Thread thread1 = new Thread(UdpReceiveThread.RunReceive);
             thread1.Start();
-            
+
             UserMonitorThread = new UserMonitorThread(DataLoader.LoadData());
             Thread thread = new Thread(UserMonitorThread.RunMonitor);
             thread.Start();
 
             UserListView.ItemsSource = UserMonitorThread.UserList;
+            
+            WeakReferenceMessenger.Default.Register<string,string>(this, "NotificationMessageAction", (r, m) =>
+            {
+                
+            });
         }
 
-        private void OnBackUserMessageHandle(MessageType messageType)
-        {
-            App.Current.Dispatcher.Invoke(
-                new Action(() =>
-                {
-                    if (_currentUser.Name == messageType.Sender)
-                    {
-                        // TODO:处于后台时，如果收到消息，则在左侧的列表中显示未读消息
-                    }
-                })
-            );
-        }
-        
-        private void OffLineHandle()
-        {
-            ChatMessageType message = new ChatMessageType(
-                false,
-                "$对方已下线$",
-                DateTime.Now
-            );
-            _currentUser.AddMessage(message);
-        }
-
-        private void OnFrontUserMessageHandle(ChatMessageType message)
+        private void OnFrontUserMessageHandle(ChatMessage message)
         {
             App.Current.Dispatcher.Invoke(
                 new Action(() =>
@@ -112,12 +95,12 @@ namespace LinGuGu2
                 LocalAccount.GetInstance.LocalIp.ToString(),
                 _currentUser.Ip.ToString()
             );
-            ChatMessageType chatMessageType = new ChatMessageType(
+            ChatMessage chatMessage = new ChatMessage(
                 true,
                 TxtMessage.Text,
                 messageType.Time
             );
-            _currentUser.AddMessage(chatMessageType);
+            _currentUser.AddMessage(chatMessage);
             TxtMessage.Text = "";
 
             var elements = DataLoader.GetUCsForNewMessage(_currentUser.MessageList, _currentUser);
@@ -174,24 +157,21 @@ namespace LinGuGu2
 
         private void UserItemDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var clickedItem = (Item)sender;
-            clickedItem.IsActive = true;
-            
             if (UserListView.SelectedItem is User selectedUser)
             {
-                List<ChatMessageType> messages = selectedUser.MessageList;
+                List<ChatMessage> messages = selectedUser.MessageList;
 
                 ChatPanel.Visibility = Visibility.Visible;
 
                 if (_currentUser != null)
                 {
                     _currentUser.MessageListChangeEvent -= OnFrontUserMessageHandle;
-                    _currentUser.OfflineEvent -= OffLineHandle;
+                    _currentUser.IsChatWith = false;
                 }
 
                 _currentUser = selectedUser;
+                _currentUser.IsChatWith = true;
                 _currentUser.MessageListChangeEvent += OnFrontUserMessageHandle;
-                _currentUser.OfflineEvent += OffLineHandle;
 
                 ChatStackPanel.Children.Clear();
                 // 将消息列表中的消息显示到聊天框中

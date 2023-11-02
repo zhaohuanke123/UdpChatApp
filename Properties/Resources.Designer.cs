@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LinGuGu2.Properties {
+namespace UdpChatApp.Properties {
     using System;
     
     

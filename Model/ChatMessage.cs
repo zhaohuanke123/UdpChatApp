@@ -7,29 +7,32 @@ namespace LinGuGu2.Model
     ///  聊天消息类型
     /// </summary>
     [Serializable]
-    public class ChatMessageType
+    public class ChatMessage
     {
         public Boolean IsMyMessage { get; set; }
         public String Message { get; set; }
         public DateTime Time { get; set; }
+        public ChatMessageTypeEnum Type { get; set; }
 
-        public ChatMessageType()
+        public ChatMessage()
         {
         }
 
-        public ChatMessageType(Boolean isMyMessage, String message, DateTime time)
+        public ChatMessage(Boolean isMyMessage, String message, DateTime time,
+            ChatMessageTypeEnum type = ChatMessageTypeEnum.Text)
         {
             IsMyMessage = isMyMessage;
             Message = message;
             Time = time;
+            Type = type;
         }
 
-        public ChatMessageType(string json)
+        public ChatMessage(string json)
         {
-            ChatMessageType type = null;
+            ChatMessage type = null;
             try
             {
-                type = JsonConvert.DeserializeObject<ChatMessageType>(json);
+                type = JsonConvert.DeserializeObject<ChatMessage>(json);
             }
             catch (Exception e)
             {
@@ -50,5 +53,12 @@ namespace LinGuGu2.Model
         {
             return JsonConvert.SerializeObject(this);
         }
+    }
+
+    public enum ChatMessageTypeEnum
+    {
+        Text = 1,
+        Online = 2,
+        Offline = 3,
     }
 }
