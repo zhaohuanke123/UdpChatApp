@@ -23,6 +23,19 @@ namespace LinGuGu2.Service
             UdpReceiveThread.ReceiveReplyEvent += ReceiveReplyAction;
             UdpReceiveThread.ReceiveRequestEvent += ReceiveRequestAction;
             UdpReceiveThread.ReceiveMessageEvent += ReceiveMessageAction;
+            UdpReceiveThread.ReceiveDisconnectEvent += ReceiveDisconnectAction;
+        }
+
+        private void ReceiveDisconnectAction(MessageType messageType)
+        {
+            for (var i = 0; i < UserList.Count; i++)
+            {
+                if (UserList[i].Ip.ToString() == messageType.Sender)
+                {
+                    UserList[i].IsOnline = false;
+                    return;
+                }
+            }
         }
 
         public void RunMonitor()
@@ -173,14 +186,13 @@ namespace LinGuGu2.Service
                     UdpReceiveThread.ReceivePort,
                     messageType.Sender
                 );
+                UserList.Add(user);
                 user.IsOnline = true;
 
                 if (messageType.Sender == LocalAccount.GetInstance.LocalIp.ToString())
                 {
                     user.Name = LocalAccount.GetInstance.Name;
                 }
-
-                UserList.Add(user);
                 Console.WriteLine("添加用户：" + user);
             }
         }

@@ -80,6 +80,10 @@ namespace LinGuGu2.Model
             {
                 if (_isOnline == value)
                     return;
+                if (Name == LocalAccount.GetInstance.Name)
+                {
+                    return;
+                }
                 SetProperty(ref _isOnline, value);
                 if (value)
                 {
@@ -118,7 +122,7 @@ namespace LinGuGu2.Model
 
         [JsonIgnore] public Action<ChatMessage> MessageListChangeEvent;
         public List<ChatMessage> MessageList { get; private set; } = new();
-        public Action OnLineEvent { get; set; }
+        [JsonIgnore] public Action OnLineEvent { get; set; }
 
         // 当List发生变化时触发事件
         public void AddMessage(ChatMessage message)

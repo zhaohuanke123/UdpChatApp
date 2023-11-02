@@ -34,13 +34,12 @@ namespace LinGuGu2
             UserMonitorThread = new UserMonitorThread(DataLoader.LoadData());
             Thread thread = new Thread(UserMonitorThread.RunMonitor);
             thread.Start();
+            Thread thread2 = new Thread(UserMonitorThread.CheckUser);
+            thread2.Start();
 
             UserListView.ItemsSource = UserMonitorThread.UserList;
-            
-            WeakReferenceMessenger.Default.Register<string,string>(this, "NotificationMessageAction", (r, m) =>
-            {
-                
-            });
+
+            WeakReferenceMessenger.Default.Register<string, string>(this, "NotificationMessageAction", (r, m) => { });
         }
 
         private void OnFrontUserMessageHandle(ChatMessage message)
@@ -181,6 +180,42 @@ namespace LinGuGu2
                 ChatUserName.Text = selectedUser.Name;
 
                 ChatScroll.ScrollToBottom();
+            }
+        }
+
+        private void MessageEnterKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (TxtMessage.Text == "")
+                {
+                    return;
+                }
+
+                if (_currentUser == null)
+                {
+                    MessageBox.Show("请选择一个用户");
+                    return;
+                }
+
+                MessageType messageType = new MessageType(
+                    MessageTypeEnum.Normal,
+                    TxtMessage.Text,
+                    LocalAccount.GetInstance.LocalIp.ToString(),
+                    _currentUser.Ip.ToString()
+                );
+                ChatMessage chatMessage = new ChatMessage(
+                    true,
+                    TxtMessage.Text,
+                    messageType.Time
+                );
+                _currentUser.AddMessage(chatMessage);
+                TxtMessage.Text = "";
+
+                var elements = DataLoader.GetUCsForNewMessage(_currentUser.MessageList, _currentUser);
+                ChatStackPanel.AddAllMessage(elements);
+
+                UdpUtil.SendMsg(messageType.ToJson(), _currentUser.Ip, UdpReceiveThread.ReceivePort);
             }
         }
     }

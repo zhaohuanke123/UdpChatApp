@@ -21,6 +21,7 @@ namespace LinGuGu2.Service
 
         // 请求连接
         public static Action<MessageType> ReceiveRequestEvent;
+        public static Action<MessageType> ReceiveDisconnectEvent;
 
         public UdpReceiveThread(IPAddress localIp)
         {
@@ -37,7 +38,7 @@ namespace LinGuGu2.Service
         {
             EndPoint point = new IPEndPoint(IPAddress.Any, 0); //用来保存发送方的ip和端口号
             byte[] buffer = new byte[1024];
-            
+
             while (true)
             {
                 int length = Client.ReceiveFrom(buffer, ref point); //接收数据报
@@ -45,7 +46,7 @@ namespace LinGuGu2.Service
                     continue;
 
                 string message = Encoding.UTF8.GetString(buffer, 0, length);
-                
+
                 MessageType type = new MessageType(message);
                 if (type.Type == MessageTypeEnum.Normal)
                 {
@@ -59,6 +60,11 @@ namespace LinGuGu2.Service
                 {
                     ReceiveRequestEvent?.Invoke(type);
                 }
+                else if (type.Type == MessageTypeEnum.RequestDisconnect)
+                {
+                    ReceiveDisconnectEvent?.Invoke(type);
+                }
+
                 Console.WriteLine("UdpReceiveThread Receive:" + message);
             }
         }
