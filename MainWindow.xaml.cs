@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -154,7 +155,7 @@ namespace LinGuGu2
             Environment.Exit(0);
         }
 
-        private void UserItemDoubleClick(object sender, MouseButtonEventArgs e)
+        private void UserItemLeftClick(object sender, MouseButtonEventArgs e)
         {
             if (UserListView.SelectedItem is User selectedUser)
             {
@@ -216,6 +217,16 @@ namespace LinGuGu2
                 ChatStackPanel.AddAllMessage(elements);
 
                 UdpUtil.SendMsg(messageType.ToJson(), _currentUser.Ip, UdpReceiveThread.ReceivePort);
+            }
+        }
+
+        private void ClearChat_Click(object sender, RoutedEventArgs e)
+        {
+            if (UserListView.SelectedItem is User selectedUser)
+            {
+                // 清除所选用户的聊天记录
+                selectedUser.MessageList.Clear();
+                ChatStackPanel.Children.Clear();
             }
         }
     }

@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
+using LinGuGu2.Model;
 using LinGuGu2.Util;
 
 namespace LinGuGu2.Service
@@ -10,8 +11,6 @@ namespace LinGuGu2.Service
     public class UdpReceiveThread
     {
         public static Socket Client = null;
-
-        public static int ReceivePort = 6660;
 
         // 普通消息
         public static Action<MessageType> ReceiveMessageEvent;
@@ -26,7 +25,7 @@ namespace LinGuGu2.Service
         public UdpReceiveThread(IPAddress localIp)
         {
             Client = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            Client.Bind(new IPEndPoint(localIp, ReceivePort));
+            Client.Bind(new IPEndPoint(localIp, LocalAccount.GetInstance.LocalPort));
         }
 
         public void StartReceive()

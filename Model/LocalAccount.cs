@@ -23,12 +23,12 @@ namespace LinGuGu2.Model
         }
 
         public IPAddress LocalIp { get; set; } // 本机的局域网ip
+        public IPAddress SubnetMask { get; set; }  // 子网掩码
         public int LocalPort { get; set; } // 本机的端口号
-
+        public Socket LocalSocket { get; set; } // 本机的socket
         public string Name { get; set; } = "localHost"; // 本机的名字
-
-        // 子网掩码
-        public IPAddress SubnetMask { get; set; }
+        // 备选端口列表
+        public int[] PortList { get; set; } = {6006, 7001, 8002, 4003, 10004, 10005, 10006, 10007};
 
         private LocalAccount()
         {
@@ -60,24 +60,24 @@ namespace LinGuGu2.Model
             }
 
             // 寻找一个可使用的端口
-            for (var port = 10000; port < 65535; port++)
+            foreach (var port in PortList)
             {
                 try
                 {
-                    var socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-                    socket.Bind(new IPEndPoint(LocalIp, port));
+                    LocalSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    LocalSocket.Bind(new IPEndPoint(LocalIp, port));
                     LocalPort = port;
-                    socket.Close();
                     break;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    Console.WriteLine("端口" + port + "被占用");
                 }
             }
 
             Console.WriteLine("LocalPort:" + LocalPort);
+            
+            
         }
     }
 }
