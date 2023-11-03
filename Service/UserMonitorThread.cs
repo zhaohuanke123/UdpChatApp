@@ -101,7 +101,7 @@ namespace LinGuGu2.Service
                                     {
                                         return;
                                     }
-                                    
+
                                     IPAddress ip = new IPAddress(ipBytes);
 
                                     if (ip.Equals(LocalAccount.GetInstance.LocalIp) &&
@@ -123,7 +123,7 @@ namespace LinGuGu2.Service
                     }
                 }
 
-                Thread.Sleep(2000);
+                Thread.Sleep(5000);
             }
         }
 
@@ -143,11 +143,10 @@ namespace LinGuGu2.Service
                     else
                     {
                         UserList[i].IsOnline = false;
-                        UserList[i].OfflineEvent?.Invoke();
+                        Console.WriteLine("CheckUser: 用户已下线：" + UserList[i]);
                     }
                 }
-
-                Thread.Sleep(1000);
+                Thread.Sleep(1500);
             }
         }
 
@@ -156,7 +155,7 @@ namespace LinGuGu2.Service
             IPAddress endPointIp = ((IPEndPoint)endPoint).Address;
             for (var i = 0; i < UserList.Count; i++)
             {
-                if (UserList[i].Ip == endPointIp.ToString())
+                if (UserList[i].Ip == endPointIp.ToString() && UserList[i].Port == ((IPEndPoint)endPoint).Port)
                 {
                     ChatMessage message = new ChatMessage
                     (
@@ -228,6 +227,8 @@ namespace LinGuGu2.Service
                 {
                     UserList[i].IsOnline = false;
                     return;
+
+                    Console.WriteLine("ReceiveDisconnectAction: 用户已下线：" + UserList[i]);
                 }
             }
         }

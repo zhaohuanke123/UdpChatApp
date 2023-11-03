@@ -122,7 +122,7 @@
                                              Image="/Images/p3.jpg"
                                              Color="{Binding Color}"
                                              MessageCount="{Binding MessageCount}"
-                                             MouseLeftButtonDown="UserItemLeftClick" >
+                                             MouseLeftButtonDown="UserItemLeftClick">
                                         <!-- 添加菜单 -->
                                         <uc:Item.ContextMenu>
                                             <ContextMenu>
@@ -134,7 +134,10 @@
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                        <Button x:Name="SHowAllButton" Content="Show All" Style="{StaticResource ShowBoxButton}" />
+                        <Button
+                            Command="{Binding DisableOtherButtonsCommand}"
+                            x:Name="SHowAllButton"
+                            Content="Show All" Style="{StaticResource ShowBoxButton}" />
 
                     </StackPanel>
                 </Grid>
@@ -145,7 +148,7 @@
                 CornerRadius="15" Background="#ffffff"
                 Margin="0 0 30 30"
                 ClipToBounds="True">
-                <Border x:Name="ChatPanel">
+                <Border x:Name="ChatPanel" Visibility="Collapsed">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
@@ -170,24 +173,6 @@
                                       x:Name="ChatScroll" Grid.Row="1" VerticalScrollBarVisibility="Auto"
                                       HorizontalScrollBarVisibility="Disabled">
                             <StackPanel x:Name="ChatStackPanel" Margin="20 10 20 20">
-                                <uc:ChatSeparator Title="Yesterday" />
-                                <uc:UserChat Username="Maud Carson" Image="/Images/p11.jpg" />
-                                <uc:MessageChat Color="#ff82a3" Message="Hello my friends" />
-                                <TextBlock Text="3:10 PM" Style="{StaticResource TimeText}" />
-                                <uc:MyMessageChat Message="Hi Maud, Are you ok?" />
-                                <uc:MyMessageChat Message="Guys we have a plan to choose best way" />
-                                <TextBlock Text="4:15 PM" Style="{StaticResource TimeTextRight}" />
-                                <uc:UserChat Username="Russell Greene" Image="/Images/p10.jpg" />
-                                <uc:MessageChat Color="#c490ff" Message="Can you share your opinion?" />
-                                <TextBlock Text="6:39 PM" Style="{StaticResource TimeText}" />
-                                <uc:ChatSeparator Title="Today" Margin="0 5 0 0" />
-                                <uc:UserChat Username="Cole Strickland" Image="/Images/p12.jpg" />
-                                <uc:MessageChat Color="#68cfa3"
-                                                Message="Yes Russell, just dont talk about it with others." />
-                                <uc:MessageChat Color="#68cfa3" Message="Our plan have a new tactics ..." />
-                                <TextBlock Text="3:25 PM" Style="{StaticResource TimeText}" />
-                                <uc:MyMessageChat Message="I'm waiting for Maud for comeback to the chat" />
-                                <TextBlock Text="3:26 PM" Style="{StaticResource TimeTextRight}" />
                             </StackPanel>
                         </ScrollViewer>
 
@@ -203,13 +188,22 @@
                                            Foreground="#868686" Panel.ZIndex="1"
                                            IsHitTestVisible="False" Text="请输入消息发送"
                                            Visibility="{Binding ElementName=TxtMessage,Path=Text.IsEmpty,Converter={StaticResource BoolTovis}}" />
-                                <TextBox x:Name="TxtMessage" Style="{StaticResource MessageTextBox}"
-                                         KeyDown="MessageEnterKeyDown" />
+                                <TextBox IsEnabled="{Binding TxtMessageViewModel.IsEnable}"
+                                         Text="{Binding TextBoxText}"
+                                         x:Name="TxtMessage" Style="{StaticResource MessageTextBox}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Key="Enter"
+                                                    Command="{Binding SendMessageCommand}"
+                                                    CommandParameter="{Binding ElementName=TxtMessage,Path=Text}">
+                                        </KeyBinding>
+                                    </TextBox.InputBindings>
+                                </TextBox>
                             </Grid>
                             <!--发送按钮-->
-                            <Button x:Name="SendButton"
+                            <Button x:Name="SendButton" IsEnabled="{Binding SendButtonViewModel.IsEnable}"
                                     Grid.Column="1" Margin="5 0 0 0" Style="{StaticResource TextBoxButton}"
-                                    Click="SendButtonClick">
+                                    Command="{Binding SendMessageCommand}"
+                                    CommandParameter="{Binding ElementName=TxtMessage,Path=Text}">
                                 <icon:PackIconMaterial Kind="Send" Margin="3 0 0 2" Width="16" Foreground="#6f59d4">
                                     <icon:PackIconMaterial.LayoutTransform>
                                         <RotateTransform Angle="-45" />
@@ -217,11 +211,9 @@
                                 </icon:PackIconMaterial>
                             </Button>
                         </Grid>
-
                     </Grid>
                 </Border>
             </Border>
         </Grid>
     </Border>
-
 </Window>

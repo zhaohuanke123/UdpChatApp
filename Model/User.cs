@@ -119,7 +119,6 @@ namespace LinGuGu2.Model
         }
 
         [JsonIgnore] public int CheckOnlineCount { get; set; } = 0;
-        [JsonIgnore] public Action OfflineEvent;
 
         [JsonIgnore] public Action<ChatMessage> MessageListChangeEvent;
         public List<ChatMessage> MessageList { get; private set; } = new();
