@@ -16,12 +16,11 @@ namespace LinGuGu2.Service
         {
         }
 
-        public MessageType(MessageTypeEnum type, string message, string sender, string receiver)
+        public MessageType(MessageTypeEnum type, string message, string sender)
         {
             Type = type;
             Message = message;
             Sender = sender;
-            Receiver = receiver;
             // 获取当前时间
             Time = DateTime.Now;
         }
@@ -35,7 +34,7 @@ namespace LinGuGu2.Service
             }
             catch (Exception e)
             {
-                // Console.WriteLine(e);
+                Console.WriteLine(e);
                 Console.Error.WriteLine("Json解析错误");
                 Console.Error.WriteLine("Receive:" + json);
             }
@@ -45,7 +44,6 @@ namespace LinGuGu2.Service
                 Type = type.Type;
                 Message = type.Message;
                 Sender = type.Sender;
-                Receiver = type.Receiver;
                 Time = type.Time;
             }
         }
@@ -66,14 +64,10 @@ namespace LinGuGu2.Service
         public string Message { get; set; }
 
         /// <summary>
-        /// 发送者
-        /// </summary>
-        public string Sender { get; set; }
-
-        /// <summary>
         /// 接收者
         /// </summary>
-        public string Receiver { get; set; }
+        public string Sender { get; set; }
+        public int SenderPort { get; set; }
 
         /// <summary>
         /// 发送时间

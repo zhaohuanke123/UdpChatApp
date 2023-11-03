@@ -145,8 +145,6 @@ public static class DataLoader
             }
 
             // 上一个消息是不同人发送的
-            Console.WriteLine("newMessage.IsMyMessage != lastMessage.IsMyMessage: " +
-                              (newMessage.IsMyMessage != lastMessage.IsMyMessage));
             if (isTimeSpanOut || newMessage.IsMyMessage != lastMessage.IsMyMessage)
             {
                 if (!newMessage.IsMyMessage)

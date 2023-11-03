@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Net;
+using System.Text;
 using System.Threading;
+using System.Windows;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.Messaging;
 using LinGuGu2.Model;
@@ -14,28 +17,17 @@ namespace LinGuGu2.Service
     /// </summary>
     public class UserMonitorThread
     {
-        public List<User> UserList { get; set; }
+        public ObservableCollection<User> UserList { get; set; }
+
 
         public UserMonitorThread(List<User> userList)
         {
-            UserList = userList;
+            UserList = new ObservableCollection<User>(userList);
 
             UdpReceiveThread.ReceiveReplyEvent += ReceiveReplyAction;
             UdpReceiveThread.ReceiveRequestEvent += ReceiveRequestAction;
             UdpReceiveThread.ReceiveMessageEvent += ReceiveMessageAction;
             UdpReceiveThread.ReceiveDisconnectEvent += ReceiveDisconnectAction;
-        }
-
-        private void ReceiveDisconnectAction(MessageType messageType)
-        {
-            for (var i = 0; i < UserList.Count; i++)
-            {
-                if (UserList[i].Ip.ToString() == messageType.Sender)
-                {
-                    UserList[i].IsOnline = false;
-                    return;
-                }
-            }
         }
 
         public void RunMonitor()
@@ -76,36 +68,66 @@ namespace LinGuGu2.Service
                 maxHostId[i] = (byte)(netId[i] | subnetMaskReverseBytes[i]);
             }
 
+            //网络号
+            Console.WriteLine("网络号：" + new IPAddress(netId));
+            // 最大主机号
+            Console.WriteLine("最大主机号：" + new IPAddress(maxHostId));
+
             // 循环对子网中的所有ip进行连接请求
             while (true)
             {
                 // 遍历所有可能的主机号,四层for循环
-                for (var netId0 = netId[0]; netId0 <= maxHostId[0]; netId0++)
+                StringBuilder sBuilder = new StringBuilder();
+                Byte[] ipBytes = new Byte[4];
+                for (ipBytes[0] = netId[0];
+                     ipBytes[0] <= maxHostId[0] - (subnetMaskBytes[0] == 255 ? 0 : 1);
+                     ipBytes[0]++)
                 {
-                    for (var netId1 = netId[1]; netId1 <= maxHostId[1]; netId1++)
+                    for (ipBytes[1] = netId[1];
+                         ipBytes[1] <= maxHostId[1] - (subnetMaskBytes[1] == 255 ? 0 : 1);
+                         ipBytes[1]++)
                     {
-                        for (var netId2 = netId[2]; netId2 <= maxHostId[2]; netId2++)
+                        for (ipBytes[2] = netId[2];
+                             ipBytes[2] <= maxHostId[2] - (subnetMaskBytes[2] == 255 ? 0 : 1);
+                             ipBytes[2]++)
                         {
-                            for (var netId3 = netId[3]; netId3 < maxHostId[3]; netId3++)
+                            for (ipBytes[3] = netId[3];
+                                 ipBytes[3] <= maxHostId[3] - (subnetMaskBytes[3] == 255 ? 0 : 1);
+                                 ipBytes[3]++)
                             {
-                                var ip = netId0 + "." + netId1 + "." + netId2 + "." + netId3;
+                                foreach (var port in LocalAccount.GetInstance.PortList)
+                                {
+                                    if (!IsRunning)
+                                    {
+                                        return;
+                                    }
+                                    
+                                    IPAddress ip = new IPAddress(ipBytes);
 
-                                // 发送连接请求
-                                MessageType messageType = new MessageType(MessageTypeEnum.RequestConnect,
-                                    "",
-                                    LocalAccount.GetInstance.LocalIp.ToString(),
-                                    ip.ToString()
-                                );
-                                UdpUtil.SendMsg(messageType.ToJson(), ip,
-                                    UdpReceiveThread.ReceivePort);
+                                    if (ip.Equals(LocalAccount.GetInstance.LocalIp) &&
+                                        port == LocalAccount.GetInstance.LocalPort)
+                                    {
+                                        continue;
+                                    }
+
+                                    // 发送连接请求
+                                    MessageType messageType = new MessageType(MessageTypeEnum.RequestConnect,
+                                        "",
+                                        LocalAccount.GetInstance.LocalIp.ToString()
+                                    );
+                                    UdpUtil.SendMsg(messageType.ToJson(), ip,
+                                        port);
+                                }
                             }
                         }
                     }
                 }
 
-                Thread.Sleep(5000);
+                Thread.Sleep(2000);
             }
         }
+
+        public bool IsRunning { get; set; } = true;
 
         public void CheckUser()
         {
@@ -129,11 +151,12 @@ namespace LinGuGu2.Service
             }
         }
 
-        private void ReceiveMessageAction(MessageType messageType)
+        private void ReceiveMessageAction(MessageType messageType, EndPoint endPoint)
         {
+            IPAddress endPointIp = ((IPEndPoint)endPoint).Address;
             for (var i = 0; i < UserList.Count; i++)
             {
-                if (UserList[i].Ip.ToString() == messageType.Sender)
+                if (UserList[i].Ip == endPointIp.ToString())
                 {
                     ChatMessage message = new ChatMessage
                     (
@@ -147,8 +170,10 @@ namespace LinGuGu2.Service
             }
         }
 
-        private void ReceiveRequestAction(MessageType messageType)
+        private void ReceiveRequestAction(MessageType messageType, EndPoint endPoint)
         {
+            IPAddress endPointIp = ((IPEndPoint)endPoint).Address;
+            int endPointPort = ((IPEndPoint)endPoint).Port;
             if (messageType.Type == MessageTypeEnum.RequestConnect)
             {
                 // 如果是请求连接的消息，则回复连接
@@ -156,22 +181,23 @@ namespace LinGuGu2.Service
                 (
                     MessageTypeEnum.ReplyConnect,
                     "",
-                    LocalAccount.GetInstance.LocalIp.ToString(),
-                    messageType.Sender
+                    endPointIp.ToString()
                 );
-                UdpUtil.SendMsg(replyMessageType.ToJson(), messageType.Sender,
-                    UdpReceiveThread.ReceivePort);
+                UdpUtil.SendMsg(replyMessageType.ToJson(), endPointIp,
+                    endPointPort);
             }
         }
 
-        private void ReceiveReplyAction(MessageType messageType)
+        private void ReceiveReplyAction(MessageType messageType, EndPoint endPoint)
         {
+            IPAddress endPointIp = ((IPEndPoint)endPoint).Address;
+            int endPointPort = ((IPEndPoint)endPoint).Port;
             if (messageType.Type == MessageTypeEnum.ReplyConnect)
             {
                 // 检测用户是否存在
                 foreach (var user1 in UserList)
                 {
-                    if (user1.Ip == messageType.Sender)
+                    if (user1.Ip == endPointIp.ToString() && user1.Port == endPointPort)
                     {
                         user1.CheckOnlineCount = 5;
                         user1.IsOnline = true;
@@ -182,18 +208,27 @@ namespace LinGuGu2.Service
 
                 // 如果是回复连接的消息，则将该用户添加到用户列表中
                 User user = new User(
-                    messageType.Sender,
-                    UdpReceiveThread.ReceivePort,
-                    messageType.Sender
+                    endPointIp.ToString(),
+                    endPointPort,
+                    endPointIp.ToString() + ":" + endPointPort
                 );
-                UserList.Add(user);
+                Application.Current.Dispatcher.Invoke(() => { UserList.Add(user); });
                 user.IsOnline = true;
 
-                if (messageType.Sender == LocalAccount.GetInstance.LocalIp.ToString())
-                {
-                    user.Name = LocalAccount.GetInstance.Name;
-                }
                 Console.WriteLine("添加用户：" + user);
+            }
+        }
+
+        private void ReceiveDisconnectAction(MessageType messageType, EndPoint endPoint)
+        {
+            IPAddress endPointIp = ((IPEndPoint)endPoint).Address;
+            for (var i = 0; i < UserList.Count; i++)
+            {
+                if (UserList[i].Ip == endPointIp.ToString() && UserList[i].Port == ((IPEndPoint)endPoint).Port)
+                {
+                    UserList[i].IsOnline = false;
+                    return;
+                }
             }
         }
     }

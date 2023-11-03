@@ -20,27 +20,31 @@ namespace LinGuGu2
         User _currentUser;
         public static UdpReceiveThread UdpReceiveThread;
         public static UserMonitorThread UserMonitorThread;
+        
+        Thread thread;
+        Thread thread1;
+        Thread thread2;
 
         public MainWindow()
         {
             InitializeComponent();
 
+            SHowAllButton.Content =
+                LocalAccount.GetInstance.LocalIp.ToString() + ":" + LocalAccount.GetInstance.LocalPort;
+
             ChatStackPanel.Children.Clear();
             ChatPanel.Visibility = Visibility.Collapsed;
 
-            UdpReceiveThread = new UdpReceiveThread(LocalAccount.GetInstance.LocalIp);
-            Thread thread1 = new Thread(UdpReceiveThread.RunReceive);
+            UdpReceiveThread = new UdpReceiveThread();
+            thread1 = new Thread(UdpReceiveThread.RunReceive);
             thread1.Start();
-
             UserMonitorThread = new UserMonitorThread(DataLoader.LoadData());
-            Thread thread = new Thread(UserMonitorThread.RunMonitor);
+            thread = new Thread(UserMonitorThread.RunMonitor);
             thread.Start();
-            Thread thread2 = new Thread(UserMonitorThread.CheckUser);
+            thread2 = new Thread(UserMonitorThread.CheckUser);
             thread2.Start();
 
             UserListView.ItemsSource = UserMonitorThread.UserList;
-
-            WeakReferenceMessenger.Default.Register<string, string>(this, "NotificationMessageAction", (r, m) => { });
         }
 
         private void OnFrontUserMessageHandle(ChatMessage message)
@@ -72,9 +76,8 @@ namespace LinGuGu2
         }
 
         bool _isMaximized = false;
-
-        public double LastWidth { get; set; } = 1250;
-        public double LastHeight { get; set; } = 830;
+        public double LastWidth { get; set; }
+        public double LastHeight { get; set; }
 
         private void SendButtonClick(object sender, RoutedEventArgs e)
         {
@@ -92,7 +95,6 @@ namespace LinGuGu2
             MessageType messageType = new MessageType(
                 MessageTypeEnum.Normal,
                 TxtMessage.Text,
-                LocalAccount.GetInstance.LocalIp.ToString(),
                 _currentUser.Ip.ToString()
             );
             ChatMessage chatMessage = new ChatMessage(
@@ -106,7 +108,7 @@ namespace LinGuGu2
             var elements = DataLoader.GetUCsForNewMessage(_currentUser.MessageList, _currentUser);
             ChatStackPanel.AddAllMessage(elements);
 
-            UdpUtil.SendMsg(messageType.ToJson(), _currentUser.Ip, UdpReceiveThread.ReceivePort);
+            UdpUtil.SendMsg(messageType.ToJson(), _currentUser.Ip, _currentUser.Port);
         }
 
         private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -149,6 +151,24 @@ namespace LinGuGu2
 
         private void CloseButtonClick(object sender, RoutedEventArgs e)
         {
+            // 等待所有线程结束
+            // UdpReceiveThread.IsRunning = false;
+            
+            thread.Abort();
+            thread1.Abort();
+            thread2.Abort();
+            
+            foreach (var user in UserMonitorThread.UserList)
+            {
+                // 发送断开连接的消息
+                MessageType messageType = new MessageType(
+                    MessageTypeEnum.RequestDisconnect,
+                    "",
+                    user.Ip
+                );
+                UdpUtil.SendMsg(messageType.ToJson(), user.Ip, user.Port);
+            }
+
             DataLoader.SaveData();
             // 关闭窗口
             Application.Current.Shutdown();
@@ -202,7 +222,6 @@ namespace LinGuGu2
                 MessageType messageType = new MessageType(
                     MessageTypeEnum.Normal,
                     TxtMessage.Text,
-                    LocalAccount.GetInstance.LocalIp.ToString(),
                     _currentUser.Ip.ToString()
                 );
                 ChatMessage chatMessage = new ChatMessage(
@@ -216,7 +235,7 @@ namespace LinGuGu2
                 var elements = DataLoader.GetUCsForNewMessage(_currentUser.MessageList, _currentUser);
                 ChatStackPanel.AddAllMessage(elements);
 
-                UdpUtil.SendMsg(messageType.ToJson(), _currentUser.Ip, UdpReceiveThread.ReceivePort);
+                UdpUtil.SendMsg(messageType.ToJson(), _currentUser.Ip, _currentUser.Port);
             }
         }
 
@@ -226,6 +245,20 @@ namespace LinGuGu2
             {
                 // 清除所选用户的聊天记录
                 selectedUser.MessageList.Clear();
+                ChatStackPanel.Children.Clear();
+            }
+        }
+
+        private void ShowAllUserButton(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void DeleteUser_Click(object sender, RoutedEventArgs e)
+        {
+            if (UserListView.SelectedItem is User selectedUser)
+            {
+                // 删除所选用户
+                UserMonitorThread.UserList.Remove(selectedUser);
                 ChatStackPanel.Children.Clear();
             }
         }

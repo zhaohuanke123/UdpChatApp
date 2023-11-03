@@ -5,7 +5,7 @@
         xmlns:uc="clr-namespace:LinGuGu2.UserControls"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         Loaded="Window_Loaded"
-        Height="830" Width="1250"
+        Height="630" Width="1050"
         Background="Transparent"
         ResizeMode="NoResize"
         AllowsTransparency="True"
@@ -127,13 +127,14 @@
                                         <uc:Item.ContextMenu>
                                             <ContextMenu>
                                                 <MenuItem Header="清除聊天记录" Click="ClearChat_Click" />
+                                                <MenuItem Header="删除好友" Click="DeleteUser_Click" />
                                             </ContextMenu>
                                         </uc:Item.ContextMenu>
                                     </uc:Item>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-                        <Button Content="Show All" Style="{StaticResource ShowBoxButton}" />
+                        <Button x:Name="SHowAllButton" Content="Show All" Style="{StaticResource ShowBoxButton}" />
 
                     </StackPanel>
                 </Grid>

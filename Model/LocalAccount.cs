@@ -28,7 +28,7 @@ namespace LinGuGu2.Model
         public Socket LocalSocket { get; set; } // 本机的socket
         public string Name { get; set; } = "localHost"; // 本机的名字
         // 备选端口列表
-        public int[] PortList { get; set; } = {6006, 7001, 8002, 4003, 10004, 10005, 10006, 10007};
+        public int[] PortList { get; set; } = {6006, 7001, 8002, 4003, };
 
         private LocalAccount()
         {
@@ -64,7 +64,7 @@ namespace LinGuGu2.Model
             {
                 try
                 {
-                    LocalSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    LocalSocket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                     LocalSocket.Bind(new IPEndPoint(LocalIp, port));
                     LocalPort = port;
                     break;
@@ -76,8 +76,6 @@ namespace LinGuGu2.Model
             }
 
             Console.WriteLine("LocalPort:" + LocalPort);
-            
-            
         }
     }
 }

@@ -80,10 +80,11 @@ namespace LinGuGu2.Model
             {
                 if (_isOnline == value)
                     return;
-                if (Name == LocalAccount.GetInstance.Name)
+                if (Ip == LocalAccount.GetInstance.LocalIp.ToString() && Port == LocalAccount.GetInstance.LocalPort)
                 {
                     return;
                 }
+
                 SetProperty(ref _isOnline, value);
                 if (value)
                 {

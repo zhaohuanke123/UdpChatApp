@@ -36,7 +36,7 @@ namespace LinGuGu2.Model
             }
             catch (Exception e)
             {
-                // Console.WriteLine(e);
+                Console.WriteLine(e);
                 Console.Error.WriteLine("Json解析错误");
                 Console.Error.WriteLine("Receive:" + json);
             }
