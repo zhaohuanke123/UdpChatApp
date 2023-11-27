@@ -10,17 +10,30 @@ namespace LinGuGu2.Service
     /// </summary>
     [Serializable]
     public class MessageType
-        // 添加可序列化
     {
+        /// <summary>
+        /// 消息类型
+        /// </summary>
+        public MessageTypeEnum Type { get; set; }
+
+        /// <summary>
+        /// 消息内容
+        /// </summary>
+        public string Message { get; set; }
+
+        /// <summary>
+        /// 发送时间
+        /// </summary>
+        public DateTime Time { get; set; }
+
         public MessageType()
         {
         }
 
-        public MessageType(MessageTypeEnum type, string message, string sender)
+        public MessageType(MessageTypeEnum type, string message)
         {
             Type = type;
             Message = message;
-            Sender = sender;
             // 获取当前时间
             Time = DateTime.Now;
         }
@@ -43,7 +56,6 @@ namespace LinGuGu2.Service
             {
                 Type = type.Type;
                 Message = type.Message;
-                Sender = type.Sender;
                 Time = type.Time;
             }
         }
@@ -52,28 +64,6 @@ namespace LinGuGu2.Service
         {
             return JsonConvert.SerializeObject(this);
         }
-
-        /// <summary>
-        /// 消息类型
-        /// </summary>
-        public MessageTypeEnum Type { get; set; }
-
-        /// <summary>
-        /// 消息内容
-        /// </summary>
-        public string Message { get; set; }
-
-        /// <summary>
-        /// 接收者
-        /// </summary>
-        public string Sender { get; set; }
-        public int SenderPort { get; set; }
-
-        /// <summary>
-        /// 发送时间
-        /// </summary>
-        public DateTime Time { get; set; }
-
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);
@@ -103,25 +93,5 @@ namespace LinGuGu2.Service
         /// 请求断开连接
         /// </summary>
         RequestDisconnect = 3,
-
-        /// <summary>
-        /// 回复断开连接
-        /// </summary>
-        ReplyDisconnect = 4,
-
-        /// <summary>
-        /// 请求获取用户列表
-        /// </summary>
-        RequestUserList = 5,
-
-        /// <summary>
-        /// 回复获取用户列表
-        /// </summary>
-        ReplyUserList = 6,
-
-        /// <summary>
-        /// 请求获取聊天记录
-        /// </summary>
-        RequestChatRecord = 7
     }
 }

@@ -70,7 +70,7 @@ namespace LinGuGu2.Model
             set => SetProperty(ref _color, value);
         }
 
-        private bool _isOnline;
+        private bool _isOnline = false;
 
         [JsonIgnore]
         public bool IsOnline
@@ -89,22 +89,22 @@ namespace LinGuGu2.Model
                 if (value)
                 {
                     Color = Brushes.Green;
-                    AddMessage(new ChatMessage(
-                        false,
-                        "",
-                        DateTime.Now,
-                        ChatMessageTypeEnum.Online
-                    ));
+                    // AddMessage(new ChatMessage(
+                    //     false,
+                    //     "",
+                    //     DateTime.Now,
+                    //     ChatMessageTypeEnum.Online
+                    // ));
                 }
                 else
                 {
                     Color = Brushes.Gray;
-                    AddMessage(new ChatMessage(
-                        false,
-                        "",
-                        DateTime.Now,
-                        ChatMessageTypeEnum.Offline
-                    ));
+                    // AddMessage(new ChatMessage(
+                        // false,
+                        // "",
+                        // DateTime.Now,
+                        // ChatMessageTypeEnum.Offline
+                    // ));
                 }
             }
         }

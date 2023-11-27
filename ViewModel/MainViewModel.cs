@@ -51,8 +51,7 @@ public class MainViewModel : ObservableObject
 
         MessageType messageType = new MessageType(
             MessageTypeEnum.Normal,
-            text,
-            MainWindow.CurrentUser.Ip.ToString()
+            text
         );
         ChatMessage chatMessage = new ChatMessage(
             true,

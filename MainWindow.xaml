@@ -189,7 +189,7 @@
                                            IsHitTestVisible="False" Text="请输入消息发送"
                                            Visibility="{Binding ElementName=TxtMessage,Path=Text.IsEmpty,Converter={StaticResource BoolTovis}}" />
                                 <TextBox IsEnabled="{Binding TxtMessageViewModel.IsEnable}"
-                                         Text="{Binding TextBoxText}"
+                                         Text="{Binding TextBoxText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                          x:Name="TxtMessage" Style="{StaticResource MessageTextBox}">
                                     <TextBox.InputBindings>
                                         <KeyBinding Key="Enter"

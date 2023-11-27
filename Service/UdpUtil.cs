@@ -20,7 +20,7 @@ namespace LinGuGu2.Service
             try
             {
                 EndPoint point = new IPEndPoint(endIp, port);
-                int sioUdpConnReset = -1744830452;
+                var sioUdpConnReset = -1744830452;
                 LocalAccount.GetInstance.LocalSocket.IOControl(
                     (IOControlCode)sioUdpConnReset,
                     new byte[] { 0, 0, 0, 0 },
@@ -35,8 +35,6 @@ namespace LinGuGu2.Service
                 System.Windows.MessageBox.Show(e.Message + Environment.NewLine + e.StackTrace);
                 SendMsg(message, endIp, port, reSentTime - 1);
             }
-            
-            // Console.WriteLine("发送消息：" + message+ "到" + endIp + ":" + port);
         }
     }
 }

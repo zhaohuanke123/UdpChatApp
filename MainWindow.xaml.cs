@@ -24,6 +24,7 @@ namespace LinGuGu2
         Thread thread;
         Thread thread1;
         Thread thread2;
+        private MainViewModel mainViewModel;
 
         public MainWindow()
         {
@@ -43,7 +44,8 @@ namespace LinGuGu2
 
             UserListView.ItemsSource = UserMonitorThread.UserList;
 
-            DataContext = new MainViewModel();
+            mainViewModel = new MainViewModel();
+            DataContext = mainViewModel;
         }
 
         private void OnFrontUserMessageHandle(ChatMessage message)
@@ -126,8 +128,7 @@ namespace LinGuGu2
                 // 发送断开连接的消息
                 MessageType messageType = new MessageType(
                     MessageTypeEnum.RequestDisconnect,
-                    "",
-                    user.Ip
+                    ""
                 );
                 UdpUtil.SendMsg(messageType.ToJson(), user.Ip, user.Port);
             }

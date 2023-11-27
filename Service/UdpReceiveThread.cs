@@ -11,25 +11,20 @@ namespace LinGuGu2.Service
     public class UdpReceiveThread
     {
         // 普通消息
-        public static Action<MessageType,EndPoint> ReceiveMessageEvent;
+        public static Action<MessageType, EndPoint> ReceiveMessageEvent;
 
         // 回复连接
-        public static Action<MessageType,EndPoint> ReceiveReplyEvent;
+        public static Action<MessageType, EndPoint> ReceiveReplyEvent;
 
         // 请求连接
-        public static Action<MessageType,EndPoint> ReceiveRequestEvent;
-        public static Action<MessageType,EndPoint> ReceiveDisconnectEvent;
+        public static Action<MessageType, EndPoint> ReceiveRequestEvent;
+        public static Action<MessageType, EndPoint> ReceiveDisconnectEvent;
 
         public UdpReceiveThread()
         {
         }
 
         public bool IsRunning { get; set; } = true;
-
-        public void StartReceive()
-        {
-            new Thread(() => { }).Start();
-        }
 
         public void RunReceive()
         {
@@ -42,7 +37,7 @@ namespace LinGuGu2.Service
                 {
                     return;
                 }
-                
+
                 int length = LocalAccount.GetInstance.LocalSocket.ReceiveFrom(buffer, ref point); //接收数据报
                 if (length == 0)
                     continue;
@@ -53,19 +48,19 @@ namespace LinGuGu2.Service
                 MessageType type = new MessageType(message);
                 if (type.Type == MessageTypeEnum.Normal)
                 {
-                    ReceiveMessageEvent?.Invoke(type,point);
+                    ReceiveMessageEvent?.Invoke(type, point);
                 }
                 else if (type.Type == MessageTypeEnum.ReplyConnect)
                 {
-                    ReceiveReplyEvent?.Invoke(type,point);
+                    ReceiveReplyEvent?.Invoke(type, point);
                 }
                 else if (type.Type == MessageTypeEnum.RequestConnect)
                 {
-                    ReceiveRequestEvent?.Invoke(type,point);
+                    ReceiveRequestEvent?.Invoke(type, point);
                 }
                 else if (type.Type == MessageTypeEnum.RequestDisconnect)
                 {
-                    ReceiveDisconnectEvent?.Invoke(type,point);
+                    ReceiveDisconnectEvent?.Invoke(type, point);
                 }
             }
         }

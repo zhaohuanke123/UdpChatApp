@@ -18,8 +18,7 @@ namespace LinGuGu2.Service
     public class UserMonitorThread
     {
         public ObservableCollection<User> UserList { get; set; }
-
-
+        
         public UserMonitorThread(List<User> userList)
         {
             UserList = new ObservableCollection<User>(userList);
@@ -76,6 +75,11 @@ namespace LinGuGu2.Service
             // 循环对子网中的所有ip进行连接请求
             while (true)
             {
+                if (!IsRunning)
+                {
+                    return;
+                }
+
                 // 遍历所有可能的主机号,四层for循环
                 StringBuilder sBuilder = new StringBuilder();
                 Byte[] ipBytes = new Byte[4];
@@ -112,8 +116,7 @@ namespace LinGuGu2.Service
 
                                     // 发送连接请求
                                     MessageType messageType = new MessageType(MessageTypeEnum.RequestConnect,
-                                        "",
-                                        LocalAccount.GetInstance.LocalIp.ToString()
+                                        ""
                                     );
                                     UdpUtil.SendMsg(messageType.ToJson(), ip,
                                         port);
@@ -133,6 +136,11 @@ namespace LinGuGu2.Service
         {
             while (true)
             {
+                if (!IsRunning)
+                {
+                    return;
+                }
+
                 // 遍历所有用户，检测是否在线
                 for (var i = 0; i < UserList.Count; i++)
                 {
@@ -146,7 +154,8 @@ namespace LinGuGu2.Service
                         Console.WriteLine("CheckUser: 用户已下线：" + UserList[i]);
                     }
                 }
-                Thread.Sleep(1500);
+
+                Thread.Sleep(1000);
             }
         }
 
@@ -179,8 +188,7 @@ namespace LinGuGu2.Service
                 MessageType replyMessageType = new MessageType
                 (
                     MessageTypeEnum.ReplyConnect,
-                    "",
-                    endPointIp.ToString()
+                    ""
                 );
                 UdpUtil.SendMsg(replyMessageType.ToJson(), endPointIp,
                     endPointPort);
